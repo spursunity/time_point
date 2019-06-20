@@ -1,9 +1,9 @@
 import React from 'react';
 
-const App = () => (
+const StartPage = () => (
   <div>
     <h1>Welcome to Meteor!</h1>
   </div>
 );
 
-export default App;
+export default StartPage;
