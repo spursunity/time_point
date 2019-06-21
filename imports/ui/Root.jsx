@@ -6,6 +6,7 @@ import { createBrowserHistory } from 'history';
 import StartPage from './pages/start-page/start-page.jsx';
 import NotFound from './pages/not-found/not-found.jsx';
 import RuleTimer from './pages/rule-timer/rule-timer.jsx';
+import TimeLog from './pages/time-log/time-log.jsx';
 
 const browserHistory = createBrowserHistory();
 
@@ -14,6 +15,7 @@ export const Root = () => (
     <Switch>
       <Route exact path="/" component={ StartPage }/>
       <Route exact path="/timer" component={ RuleTimer }/>
+      <Route exact path="/log" component={ TimeLog }/>
       <Route component={ NotFound }/>
     </Switch>
   </Router>

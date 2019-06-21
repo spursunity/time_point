@@ -1,0 +1,25 @@
+.timeLog {
+  min-height: calc(100vh - 70px - 50px);
+  min-width: 100%;
+  background-image: url('./images/log-back.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: stretch;
+}
+
+.timeLog .listBlock {
+  max-height: calc(100vh - 70px - 50px);
+  width: 20%;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.timeLog .resultBlock {
+  max-height: calc(100vh - 70px - 50px);
+  width: 80%;
+  overflow-y: auto;
+}
