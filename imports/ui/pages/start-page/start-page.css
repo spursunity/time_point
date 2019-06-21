@@ -1,0 +1,12 @@
+.startPage {
+  min-height: calc(100vh - 70px - 50px);
+  min-width: 100%;
+  background-image: url('./images/back.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.startPage .greeting{
+  margin: 0;
+}
