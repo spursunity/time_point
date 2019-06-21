@@ -1,0 +1,35 @@
+.basis {
+  min-height: 100vh;
+  min-width: 100%;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.basis header {
+  min-width: 100%;
+  background-color: #7EC6F1;
+  height: 70px;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+}
+
+.basis .headerTitle {
+  font-size: 2rem;
+  color: #0D496E;
+  margin: 0;
+}
+
+.basis footer {
+  min-width: 100%;
+  background-color: #0D496E;
+  height: 50px;
+  font-size: 2rem;
+  color: #fff;
+}
