@@ -1,0 +1,40 @@
+.ruleTimer {
+  min-height: calc(100vh - 70px - 50px);
+  min-width: 100%;
+  background-image: url('./images/rule-back.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: stretch;
+}
+
+.ruleTimer .tasksList {
+  width: 20%;
+  background-color: #fff;
+  color: #000;
+}
+
+.ruleTimer .managingBlock {
+  width: 80%;
+}
+
+.ruleTimer .newTask {
+  height: 20%;
+}
+
+.ruleTimer .timer {
+  height: 80%;
+}
+
+
+
+
+
+/*
+.ruleTimer {
+
+}
+*/
