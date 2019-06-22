@@ -1,13 +1,16 @@
 import React from 'react';
 
 import Basis from '../../containers/basis/basis.jsx';
+import Auth from '../../components/auth/auth.jsx';
 
 import './start-page.css';
 
 const StartPage = () => (
   <Basis>
     <div className='startPage'>
-      <p className='greeting'>StartPage</p>
+      <div className='signin'>
+        <Auth />
+      </div>
     </div>
   </Basis>
 );

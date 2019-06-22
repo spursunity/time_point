@@ -1,0 +1,12 @@
+.signForm {
+  padding: .7rem;
+}
+
+.signForm .signField {
+  padding-top: .3rem;
+  display: block;
+}
+
+.signForm .invisible {
+  visibility: hidden;
+}

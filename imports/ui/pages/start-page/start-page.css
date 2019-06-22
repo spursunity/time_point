@@ -5,8 +5,18 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.startPage .greeting{
-  margin: 0;
+.startPage .signin{
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #009;
 }

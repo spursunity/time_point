@@ -1,0 +1,14 @@
+.auth {
+  padding: 1rem;
+  background-color: #0D496E;
+  color: #fff;
+  font-size: 1.3rem;
+  min-width: 30%;
+  border-radius: .5rem;
+}
+
+.auth .chooseSignTypeBlock {
+  min-height: 20%;
+  border-bottom: 2px solid #fff;
+  padding: .7rem;
+}
