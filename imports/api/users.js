@@ -1,3 +1,3 @@
 import { Mongo } from 'meteor/mongo';
 
-export default Links = new Mongo.Collection('links');
+export default Users = new Mongo.Collection('users');
