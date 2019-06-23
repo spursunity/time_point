@@ -33,7 +33,12 @@ Meteor.methods({
     const { token, expiration } = tokenData;
     const now = +(new Date());
 
-    return token !== null && expiration > now;
+    if (!expiration || expiration <= now) {
+      Users.update({ username }, { $set: { token: null, expiration: null } });
+      return false;
+    }
+
+    return token !== null;
   },
   'users.signin'(username, password) {
     const tokenData = createToken();
