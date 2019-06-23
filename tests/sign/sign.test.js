@@ -51,6 +51,13 @@ describe("TimePoint sign -", function () {
 
         signin(notExistingUsername, password).should.equal(0);
       });
+
+      it("password is wrong -", () => {
+        const signin = Meteor.server.method_handlers['users.signin'];
+
+        signin(username, wrongPassword).should.equal(0);
+
+      });
     }
   });
 });
