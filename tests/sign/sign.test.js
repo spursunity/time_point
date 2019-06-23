@@ -7,7 +7,9 @@ describe("TimePoint sign -", function () {
   describe('user actions with auth -', () => {
     if (Meteor.isServer) {
       const username = 'AlbertJohnJackBrienLukeAntonJakson';
+      const notExistingUsername = 'kkkkkaaaaaaaarrrrrrrrrr';
       const password = 'tt92kssss';
+      const wrongPassword = 'tt92ksss'; // without one letter -s-
 
       it("create account -", () => {
         const createAccount = Meteor.server.method_handlers['users.createAccount'];
@@ -40,8 +42,14 @@ describe("TimePoint sign -", function () {
       it("sign in -", () => {
         const signin = Meteor.server.method_handlers['users.signin'];
 
-        signin(username, password);
-        checkUserToken().should.not.deep.equal({ token: null, expiration: null });
+        signin(username, password).should.equal(1);
+        checkUserToken(username, password).should.not.deep.equal({ token: null, expiration: null });
+      });
+
+      it("user does not exist -", () => {
+        const signin = Meteor.server.method_handlers['users.signin'];
+
+        signin(notExistingUsername, password).should.equal(0);
       });
     }
   });
