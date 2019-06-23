@@ -28,7 +28,12 @@ Meteor.methods({
     const now = +(new Date());
 
     return token !==null && expiration > now;
-  }
+  },
+  'users.signin'(username, password) {
+    const tokenData = createToken();
+
+    Users.update({ username, password }, { $set: tokenData });
+  },
 });
 
 function createToken() {
