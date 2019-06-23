@@ -56,7 +56,12 @@ describe("TimePoint sign -", function () {
         const signin = Meteor.server.method_handlers['users.signin'];
 
         signin(username, wrongPassword).should.equal(0);
+      });
 
+      it('username is occupied', () => {
+        const createAccount = Meteor.server.method_handlers['users.createAccount'];
+
+        createAccount(username, password).should.have.own.property('username');
       });
     }
   });
