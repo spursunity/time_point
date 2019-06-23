@@ -11,6 +11,7 @@ describe("TimePoint sign -", function () {
       const emptyUsername = '';
       const password = 'tt92kssss';
       const wrongPassword = 'tt92ksss'; // without one letter -s-
+      const tooSmallPassword = 'hhaaj';
 
       it("create account -", () => {
         const createAccount = Meteor.server.method_handlers['users.createAccount'];
@@ -69,6 +70,12 @@ describe("TimePoint sign -", function () {
         const createAccount = Meteor.server.method_handlers['users.createAccount'];
 
         createAccount(emptyUsername, password).should.have.own.property('username');
+      });
+
+      it('creation: password has less then 6 symbols', () => {
+        const createAccount = Meteor.server.method_handlers['users.createAccount'];
+
+        createAccount(username, tooSmallPassword).should.have.own.property('password');
       });
     }
   });
