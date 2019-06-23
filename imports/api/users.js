@@ -32,7 +32,7 @@ Meteor.methods({
   'users.signin'(username, password) {
     const tokenData = createToken();
 
-    Users.update({ username, password }, { $set: tokenData });
+    return Users.update({ username, password }, { $set: tokenData });
   },
 });
 
