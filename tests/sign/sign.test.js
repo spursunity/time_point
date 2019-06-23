@@ -36,6 +36,13 @@ describe("TimePoint sign -", function () {
 
         isLogged(username).should.equal(false);
       });
+
+      it("sign in -", () => {
+        const signin = Meteor.server.method_handlers['users.signin'];
+
+        signin(username, password);
+        checkUserToken().should.not.deep.equal({ token: null, expiration: null });
+      });
     }
   });
 });
