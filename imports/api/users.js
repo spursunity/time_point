@@ -10,6 +10,12 @@ Meteor.methods({
     check(username, String);
     check(password, String);
 
+    const errors = checkNewUserData(username, password);
+
+    if (errors) {
+      return errors;
+    }
+
     const tokenData = createToken();
     const userData = { username, password, ...tokenData, };
 
@@ -27,7 +33,7 @@ Meteor.methods({
     const { token, expiration } = tokenData;
     const now = +(new Date());
 
-    return token !==null && expiration > now;
+    return token !== null && expiration > now;
   },
   'users.signin'(username, password) {
     const tokenData = createToken();
@@ -44,4 +50,22 @@ function createToken() {
   const token = require('crypto').randomBytes(24).toString('hex');
 
   return { token, expiration, };
+}
+
+function checkNewUserData(username, password) {
+  const errors = {};
+
+  if (!! Users.findOne({ username })) {
+    errors.username = 'That name is already occupied';
+  } else if (username === '') {
+    errors.username = 'Fill out this field';
+  }
+
+  if (password.length < 6) {
+    errors.password = 'Minimal 6 symbols';
+  }
+
+  if (errors.username || errors.password) {
+    return errors;
+  }
 }
