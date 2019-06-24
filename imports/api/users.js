@@ -12,7 +12,7 @@ Meteor.methods({
 
     const errors = checkNewUserData(username, password);
 
-    if (errors) {
+    if (errors.exist) {
       return errors;
     }
 
@@ -58,19 +58,20 @@ function createToken() {
 }
 
 function checkNewUserData(username, password) {
-  const errors = {};
+  const errors = { exist: false };
 
   if (!! Users.findOne({ username })) {
     errors.username = 'That name is already occupied';
+    errors.exist = true;
   } else if (username === '') {
     errors.username = 'Fill out this field';
+    errors.exist = true;
   }
 
   if (password.length < 6) {
     errors.password = 'Minimal 6 symbols';
+    errors.exist = true;
   }
 
-  if (errors.username || errors.password) {
-    return errors;
-  }
+  return errors;
 }
