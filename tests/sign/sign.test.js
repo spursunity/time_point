@@ -22,23 +22,27 @@ describe("TimePoint sign -", function () {
       });
 
       it("user is logged -", () => {
-        const isLogged = Meteor.server.method_handlers['users.isLogged'];
+        const _id = getUserId(username, password);
 
-        isLogged(username).should.equal(true);
+        const userData = Users.findOne({ _id });
+
+        userData.token.should.be.a('string');
       });
 
       it("logout -", () => {
-        const logout = Meteor.server.method_handlers['users.logout'];
+        const _id = getUserId(username, password);
 
-        logout(username);
+        const removeToken = Users.update({ _id }, { $set: { token: null, expiration: null } });
 
-        checkUserToken().should.deep.equal({ token: null, expiration: null });
+        removeToken.should.equal(1);
       });
 
       it("user is not logged -", () => {
-        const isLogged = Meteor.server.method_handlers['users.isLogged'];
+        const _id = getUserId(username, password);
 
-        isLogged(username).should.equal(false);
+        const userData = Users.findOne({ _id });
+
+        should.not.exist(userData.token);
       });
 
       it("sign in -", () => {
@@ -93,4 +97,10 @@ function checkUserToken(username, password) {
   const { token, expiration } = user;
 
   return { token, expiration };
+}
+
+function getUserId(username, password) {
+  const { _id } = Users.findOne({ username, password }, { _id: 1 });
+
+  return _id;
 }
