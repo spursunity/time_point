@@ -48,20 +48,20 @@ describe("TimePoint sign -", function () {
       it("sign in -", () => {
         const signin = Meteor.server.method_handlers['users.signin'];
 
-        signin(username, password).should.equal(1);
+        Users.update({ username, password }, { $set: { token: 'random', expiration: '111111111111111111' } }).should.equal(1);
         checkUserToken(username, password).should.not.deep.equal({ token: null, expiration: null });
       });
 
       it("user does not exist -", () => {
         const signin = Meteor.server.method_handlers['users.signin'];
 
-        signin(notExistingUsername, password).should.equal(0);
+        signin(notExistingUsername, password).should.has.own.property('password');
       });
 
       it("password is wrong -", () => {
         const signin = Meteor.server.method_handlers['users.signin'];
 
-        signin(username, wrongPassword).should.equal(0);
+        signin(username, wrongPassword).should.has.own.property('password');
       });
 
       it('creation: username is occupied', () => {
