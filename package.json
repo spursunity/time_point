@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.3.4",
+    "body-parser": "^1.19.0",
+    "drupal-hash": "^1.0.4",
+    "express-session": "^1.16.2",
     "history": "^4.9.0",
+    "jsonwebtoken": "^8.5.1",
     "meteor-node-stubs": "^0.4.1",
     "prop-types": "^15.7.2",
     "react": "^16.5.0",
