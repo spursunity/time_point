@@ -5,7 +5,7 @@ import Sign from '../sign/sign.jsx';
 
 import './auth.css';
 
-const Auth = () => {
+const Auth = ({ redirect, authError }) => {
   let [ trySignIn, setTrySignIn ] = useState(true);
   let [ signText, setSignText ] = useState('Sign up');
 
@@ -23,14 +23,18 @@ const Auth = () => {
         <button onClick={ changeEnter }>{ signText }</button>
       </div>
       <div>
-        <Sign trySignIn={ trySignIn } />
+        <Sign
+        trySignIn={ trySignIn }
+        redirect={ redirect }
+        authError={ authError }
+        />
       </div>
     </div>
   );
 };
 
 Auth.propTypes = {
-
+  redirect: PropTypes.func.isRequired,
 };
 
 export default Auth;
