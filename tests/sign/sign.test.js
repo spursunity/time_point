@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import 'chai/register-should';
 
 import Users from '../../imports/api/users';
+import SignHelper from '../../imports/api/helpers/sign-helper';
 
 describe("TimePoint sign -", function () {
   describe('user actions with auth -', () => {
@@ -11,96 +12,70 @@ describe("TimePoint sign -", function () {
       const emptyUsername = '';
       const password = 'tt92kssss';
       const wrongPassword = 'tt92ksss'; // without one letter -s-
-      const tooSmallPassword = 'hhaaj';
+      const tooShortPassword = 'hhaaj';
+      const signHelper = new SignHelper();
 
-      it("create account -", () => {
-        const createAccount = Meteor.server.method_handlers['users.createAccount'];
+      it("create account -", async (done) => {
+        const errors = await signHelper.signUp(username, password);
 
-        createAccount(username, password);
+        should.equal(errors, undefined);
 
-        findUsersCount(username, password).should.equal(1);
+        done();
       });
 
-      it("user is logged -", () => {
-        const _id = getUserId(username, password);
+      it("create account (username is occupied) -", async (done) => {
+        const errors = await signHelper.signUp(username, password);
 
-        const userData = Users.findOne({ _id });
+        errors.username.should.be.a('string');
 
-        userData.token.should.be.a('string');
+        done();
       });
 
-      it("logout -", () => {
-        const _id = getUserId(username, password);
+      it('create account (empty username) -', async (done) => {
+        const errors = await signHelper.signUp(emptyUsername, password);
 
-        const removeToken = Users.update({ _id }, { $set: { token: null, expiration: null } });
+        errors.username.should.be.a('string');
 
-        removeToken.should.equal(1);
+        done();
       });
 
-      it("user is not logged -", () => {
-        const _id = getUserId(username, password);
+      it('create account (too short password) -', async (done) => {
+        const errors = await signHelper.signUp(username, tooShortPassword);
 
-        const userData = Users.findOne({ _id });
+        errors.password.should.be.a('string');
 
-        should.not.exist(userData.token);
+        done();
       });
 
-      it("sign in -", () => {
-        const signin = Meteor.server.method_handlers['users.signin'];
+      it('create token -', () => {
+        const token = signHelper.createToken({ username });
 
-        Users.update({ username, password }, { $set: { token: 'random', expiration: '111111111111111111' } }).should.equal(1);
-        checkUserToken(username, password).should.not.deep.equal({ token: null, expiration: null });
+        token.should.be.a('string');
       });
 
-      it("user does not exist -", () => {
-        const signin = Meteor.server.method_handlers['users.signin'];
+      it('sign in -', async (done) => {
+        const errors = await signHelper.signIn(username, password);
 
-        signin(notExistingUsername, password).should.has.own.property('password');
+        should.equal(errors, undefined);
+
+        done();
       });
 
-      it("password is wrong -", () => {
-        const signin = Meteor.server.method_handlers['users.signin'];
+      it('sign in (wrong username) -', async (done) => {
+        const errors = await signHelper.signIn(notExistingUsername, password);
 
-        signin(username, wrongPassword).should.has.own.property('password');
+        errors.password.should.be.a('string');
+
+        done();
       });
 
-      it('creation: username is occupied', () => {
-        const createAccount = Meteor.server.method_handlers['users.createAccount'];
+      it('sign in (wrong password) -', async (done) => {
+        const errors = await signHelper.signIn(username, wrongPassword);
 
-        createAccount(username, password).should.have.own.property('username');
-      });
+        errors.password.should.be.a('string');
 
-      it('creation: username is empty', () => {
-        const createAccount = Meteor.server.method_handlers['users.createAccount'];
-
-        createAccount(emptyUsername, password).should.have.own.property('username');
-      });
-
-      it('creation: password has less then 6 symbols', () => {
-        const createAccount = Meteor.server.method_handlers['users.createAccount'];
-
-        createAccount(username, tooSmallPassword).should.have.own.property('password');
+        done();
       });
     }
   });
 });
-
-function findUsersCount(username, password) {
-  if (!username && !password) {
-    return Users.find({}).count();
-  }
-  return Users.find({username, password}).count();
-}
-
-function checkUserToken(username, password) {
-  const user = Users.findOne({username, password});
-  const { token, expiration } = user;
-
-  return { token, expiration };
-}
-
-function getUserId(username, password) {
-  const { _id } = Users.findOne({ username, password }, { _id: 1 });
-
-  return _id;
-}
