@@ -4,11 +4,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Basis from '../../containers/basis/basis.jsx';
 import Auth from '../../components/auth/auth.jsx';
+import Loading from '../../components/loading/loading.jsx';
 
 import './start-page.css';
 
 const StartPage = (props) => {
   let [ authError, setAuthError ] = useState({});
+  let [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     Meteor.call('users.checkUserInitialData', (err, res) => {
@@ -18,6 +20,9 @@ const StartPage = (props) => {
         redirectToTimerPage();
       } else if (res.warnings) {
         setAuthError(res.warnings);
+        setLoading(false);
+      } else {
+        setLoading(false);
       }
     });
   }, []);
@@ -27,6 +32,8 @@ const StartPage = (props) => {
   };
 
   return (
+    loading ?
+    <Loading /> :
     <Basis>
       <div className='startPage'>
         <div className='signin'>
