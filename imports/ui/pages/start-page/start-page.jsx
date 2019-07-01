@@ -18,8 +18,8 @@ const StartPage = (props) => {
 
       if (res.hasToken) {
         redirectToTimerPage();
-      } else if (res.warnings) {
-        setAuthError(res.warnings);
+      } else if (res.errors) {
+        setAuthError(res.errors);
         setLoading(false);
       } else {
         setLoading(false);

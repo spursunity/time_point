@@ -10,41 +10,47 @@ export default Users = new Mongo.Collection('users');
 let initialData = {};
 
 if (Meteor.isServer) {
-  const signHelper = new SignHelper();
+  try {
+    const signHelper = new SignHelper();
 
-  WebApp.connectHandlers.use(session({
-    secret: 'peninsula',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
-  }));
+    WebApp.connectHandlers.use(session({
+      secret: 'peninsula',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { maxAge: 60000 },
+    }));
 
-  WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));
+    WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));
 
-  WebApp.connectHandlers.use((req, res, next) => {
-    initialData = {};
+    WebApp.connectHandlers.use((req, res, next) => {
+      initialData = {};
 
-    if (req.session.token) initialData.hasToken = true;
+      if (req.session.token) initialData.hasToken = true;
 
-    next();
-  });
+      next();
+    });
 
-  WebApp.connectHandlers.use(async (req, res, next) => {
-    if (req.body.username && req.body.password) {
-      const { username, password } = req.body;
+    WebApp.connectHandlers.use(async (req, res, next) => {
+      if (req.body.username && req.body.password) {
+        const { username, password } = req.body;
 
-      initialData.warnings = req.body.copyPassword ?
-      await signHelper.signUp(username, password) :
-      await signHelper.signIn(username, password);
+        const result = req.body.copyPassword ?
+        await signHelper.signUp(username, password) :
+        await signHelper.signIn(username, password);
 
-      if (! initialData.warnings) {
-        req.session.token = signHelper.createToken(username);
-        initialData.hasToken = true;
+        if (result['_id']) {
+          req.session.token = signHelper.createToken(result);
+          initialData.hasToken = true;
+        } else {
+          initialData.errors = result;
+        }
       }
-    }
 
-    next();
-  });
+      next();
+    });
+  } catch (err) {
+    console.log('api/users.js - ', err);
+  }
 }
 
 Meteor.methods({
@@ -52,6 +58,10 @@ Meteor.methods({
     return initialData;
   },
   'users.removeAllUsers'() {
-    Users.remove({});
+    try {
+      Users.remove({});
+    } catch (err) {
+      console.log('Meteor methods - removeAllUsers - ', err);
+    }
   },
 });
