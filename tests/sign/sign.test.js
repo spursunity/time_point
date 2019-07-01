@@ -16,9 +16,9 @@ describe("TimePoint sign -", function () {
       const signHelper = new SignHelper();
 
       it("create account -", async (done) => {
-        const errors = await signHelper.signUp(username, password);
+        const result = await signHelper.signUp(username, password);
 
-        should.equal(errors, undefined);
+        result['_id'].should.be.a('string');
 
         done();
       });
@@ -54,9 +54,9 @@ describe("TimePoint sign -", function () {
       });
 
       it('sign in -', async (done) => {
-        const errors = await signHelper.signIn(username, password);
+        const result = await signHelper.signIn(username, password);
 
-        should.equal(errors, undefined);
+        result['_id'].should.be.a('string');
 
         done();
       });
