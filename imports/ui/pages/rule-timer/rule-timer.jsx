@@ -15,7 +15,7 @@ const RuleTimer = (props) => {
   let [ currentTaskName, setCurrentTaskName ] = useState('No chosen');
   let [ startTime, setStartTime ] = useState(0);
   let [ taskNameError, setTaskNameError ] = useState('');
-  let [ tasks, setTasks ] = useState(null);
+  let [ tasks, setTasks ] = useState([]);
 
   useEffect(() => {
     Meteor.call('tasks.getInitialData', (err, res) => {
