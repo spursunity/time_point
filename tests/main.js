@@ -1,6 +1,7 @@
 import assert from "assert";
 
 import './sign/sign.test';
+import './rule-timer/rule-timer.test';
 
 describe("TimePoint", function () {
   it("package.json has correct name", async function () {
