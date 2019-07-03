@@ -1,5 +1,5 @@
 .timeLog {
-  min-height: calc(100vh - 70px - 50px);
+  height: calc(100vh - 70px - 50px);
   min-width: 100%;
   background-image: url('./images/log-back.jpg');
   background-size: cover;
@@ -8,18 +8,44 @@
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
+  justify-content: center;
   align-items: stretch;
-}
-
-.timeLog .listBlock {
-  max-height: calc(100vh - 70px - 50px);
-  width: 20%;
   overflow-y: auto;
-  background-color: #fff;
 }
 
-.timeLog .resultBlock {
-  max-height: calc(100vh - 70px - 50px);
+.timeLog .tasksList {
   width: 80%;
-  overflow-y: auto;
+  background-color: rgba(126, 198, 241, .6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.timeLog .tasksList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.timeLog .taskBlock {
+  width: 80%;
+  background-color: #0D496E;
+  color: #fff;
+  padding: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.timeLog .field {
+  padding: 0;
+  margin: 0;
+  padding-bottom: .7rem;
+}
+
+.timeLog .fieldTitle {
+  font-weight: bold;
+  font-style: italic;
 }
