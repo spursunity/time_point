@@ -17,7 +17,7 @@ if (Meteor.isServer) {
       secret: 'peninsula',
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: 60000 },
+      cookie: { maxAge: 300000 },
     }));
 
     WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));
