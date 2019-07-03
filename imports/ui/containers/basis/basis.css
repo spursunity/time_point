@@ -17,13 +17,21 @@
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .basis .headerTitle {
   font-size: 2rem;
   color: #0D496E;
   margin: 0;
+}
+
+.basis .headerButton {
+  display: flex;
+  justify-content: center;
+  min-height: 30%;
 }
 
 .basis footer {

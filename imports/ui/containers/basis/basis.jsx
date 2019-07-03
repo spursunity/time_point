@@ -7,6 +7,7 @@ const Basis = (props) => (
   <div className='basis'>
     <header>
       <h1 className='headerTitle'>{ props.headerText || 'TimePoint' }</h1>
+      <div className='headerButton'>{ props.headerButton || '' }</div>
     </header>
     { props.children }
     <footer>Footer</footer>
