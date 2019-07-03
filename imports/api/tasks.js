@@ -36,7 +36,6 @@ Meteor.methods({
     try {
       check(newTaskName, String);
       check(tasksCount, Number);
-      console.log(uid);
 
       if (tasksCount === 0) {
         const tasksListId = await Tasks.insert({ owner: uid, tasksNames: [newTaskName] });
@@ -119,7 +118,9 @@ Meteor.methods({
   },
   async 'tasks.getTasksInfo'() {
     try {
-      const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } });
+      if (! uid) return false;
+      
+      const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } }) || { tasksInfo: [] };
       let sortedTasksInfo;
 
       if (tasksInfo.length > 1) {
