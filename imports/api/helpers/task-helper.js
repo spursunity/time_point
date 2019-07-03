@@ -32,7 +32,7 @@ export default class TaskHelper {
 
       const minutes = Math.round(diffTime / minuteMs);
 
-      return `${days} days, ${hours} hours, ${minutes} minutes`;
+      return `${days} day(-s), ${hours} hour(-s), ${minutes} minute(-s)`;
     } catch (err) {
       console.log('TaskHelper - getTaskDuration - ', err);
     }
@@ -53,9 +53,22 @@ export default class TaskHelper {
       const weekday = weekdaysArray[weekdayNumber];
       const year = date.getFullYear();
 
-      return `${hours}:${minutes} - ${month} ${day} (${weekday}) - ${year}`;
+      const hoursString = this.transformTimeToString(hours);
+      const minutesString = this.transformTimeToString(minutes);
+
+      return `${hoursString}:${minutesString} - ${month} ${day} (${weekday}) - ${year}`;
     } catch (err) {
       console.log('TaskHelper - transformDateToString - ', err);
+    }
+  }
+
+  transformTimeToString(time) {
+    try {
+      if (time < 10) return '0' + time;
+
+      return '' + time;
+    } catch (err) {
+      console.log('TaskHelper - transformTimeToString - ', err);
     }
   }
 }
