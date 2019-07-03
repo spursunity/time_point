@@ -17,7 +17,7 @@ export default class RuleTimerHelper {
 
       const minutes = Math.round(diffTime / minuteMs);
 
-      return `${days} days, ${hours} hours, ${minutes} minutes`;
+      return `${days} day(-s), ${hours} hour(-s), ${minutes} minute(-s)`;
     } catch (err) {
       console.log('RuleTimerHelper - getTaskDuration - ', err);
     }
