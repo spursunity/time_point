@@ -4,16 +4,18 @@
 
 1. Sign in / up:
 
-![first screen](https://github.com/spursunity/time_point/blob/master/public/screens/screen_1.jpg)
+![first screen](https://github.com/spursunity/time_point/blob/master/public/screens/sc_1.jpg)
+
+![second screen](https://github.com/spursunity/time_point/blob/master/public/screens/sc_2.jpg)
 
 2. Add task; choose it; start the timer:
 
-![second screen](https://github.com/spursunity/time_point/blob/master/public/screens/screen_2.jpg)
+![third screen](https://github.com/spursunity/time_point/blob/master/public/screens/sc_3.jpg)
 
 3. Check time; stop the timer:
 
-![third screen](https://github.com/spursunity/time_point/blob/master/public/screens/screen_3.jpg)
+![fourth screen](https://github.com/spursunity/time_point/blob/master/public/screens/sc_4.jpg)
 
 4. See result:
 
-![fourth screen](https://github.com/spursunity/time_point/blob/master/public/screens/screen_4.jpg)
+![fifth screen](https://github.com/spursunity/time_point/blob/master/public/screens/sc_5.jpg)
