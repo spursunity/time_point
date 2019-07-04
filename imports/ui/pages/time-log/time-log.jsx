@@ -46,9 +46,12 @@ const TimeLog = () => {
   };
 
   const headerButton = (
-    <Link to='/timer'>
-      <button>See timer</button>
-    </Link>
+    <>
+      <Link to='/timer'>
+        <button className='button-small-circle blue'>See</button>
+      </Link>
+      <span>timer</span>
+    </>
   );
 
   return (

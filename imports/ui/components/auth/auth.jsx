@@ -7,20 +7,32 @@ import './auth.css';
 
 const Auth = ({ redirect, authError }) => {
   let [ trySignIn, setTrySignIn ] = useState(true);
-  let [ signText, setSignText ] = useState('Sign up');
 
-  const changeEnter = () => {
-    const buttonText = trySignIn ? 'Sign in' : 'Sign up';
+  const setSignIn = () => {
+    setTrySignIn(true);
+  };
 
-    setSignText(buttonText);
-    setTrySignIn(!trySignIn);
-  }
+  const setSignUp = () => {
+    setTrySignIn(false);
+  };
 
   return (
     <div className='auth'>
       <div className='chooseSignTypeBlock'>
-        <span>I want to</span>
-        <button onClick={ changeEnter }>{ signText }</button>
+        <span>Sign </span>
+        <button
+        className='button-small-circle blue'
+        onClick={ setSignIn }
+        >
+          IN
+        </button>
+        <span className='preButton'>Sign</span>
+        <button
+        className='button-small-circle blue'
+        onClick={ setSignUp }
+        >
+          UP
+        </button>
       </div>
       <div>
         <Sign

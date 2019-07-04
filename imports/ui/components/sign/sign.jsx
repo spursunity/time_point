@@ -58,52 +58,60 @@ const Sign = ({ trySignIn, redirect, authError }) => {
     action='/'
     >
       <label className='signField'>
-        Username
-        <input
-        type="text"
-        name='username'
-        onChange={ changeUsername }
-        />
-        {
-          authError && authError.username ?
-          <p className='hint'>{ authError.username }</p> :
-          <p className='hint'></p>
-        }
+        <span>Username</span>
+        <div>
+          <input
+          type="text"
+          name='username'
+          onChange={ changeUsername }
+          />
+          {
+            authError && authError.username ?
+            <p className='hint'>{ authError.username }</p> :
+            <p className='hint'></p>
+          }
+        </div>
       </label>
       <label className='signField'>
-        Password
-        <input
-        type="password"
-        name='password'
-        onChange={ changePassword }
-        />
-        {
-          authError && authError.password ?
-          <p className='hint'>{ authError.password }</p> :
-          <p className='hint'></p>
-        }
+        <span>Password</span>
+        <div>
+          <input
+          type="password"
+          name='password'
+          onChange={ changePassword }
+          />
+          {
+            authError && authError.password ?
+            <p className='hint'>{ authError.password }</p> :
+            <p className='hint'></p>
+          }
+        </div>
       </label>
       <label className={ repeatPassClass }>
-        Repeat Password
-        <input
-        type="password"
-        name='copyPassword'
-        onChange={ changePasswordCopy }
-        />
+        <span>Repeat Password</span>
+        <div>
+          <input
+          type="password"
+          name='copyPassword'
+          onChange={ changePasswordCopy }
+          />
+        </div>
       </label>
       {
         trySignIn ?
         <button
+        className='button-circle blue'
         type='submit'
         disabled= { buttonDisabled }
         >
           Log in
         </button> :
         <button
+        className='button-circle blue'
         type='submit'
         disabled={ buttonDisabled }
         >
-          Create account
+          New user
         </button>
       }
     </form>

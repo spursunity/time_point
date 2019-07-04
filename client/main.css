@@ -17,4 +17,47 @@ html {
 
 button {
   cursor: pointer;
+  outline: none;
+}
+
+.button-circle {
+  padding: .3rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+}
+
+.button-small-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.button-circle.blue, .button-small-circle.blue {
+  background-color: #0D496E;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.button-circle.blue:hover, .button-small-circle.blue:hover {
+  background-color: #fff;
+  color: #0D496E;
+  border: 2px solid #0D496E;
+  box-shadow: 0 0 10px 5px rgba(126, 198, 241, .6);
+}
+
+.button-circle.red {
+  background-color: #E9415D;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.button-circle.red:hover {
+  background-color: #fff;
+  color: #E9415D;
+  border: 2px solid #E9415D;
+  box-shadow: 0 0 10px 5px rgba(233, 65, 93, .6);
 }

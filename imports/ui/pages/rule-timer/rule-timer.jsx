@@ -14,6 +14,7 @@ const RuleTimer = (props) => {
   let [ newTaskName, setNewTaskName ] = useState('');
   let [ currentTaskName, setCurrentTaskName ] = useState('No chosen');
   let [ startTime, setStartTime ] = useState(0);
+  let [ taskDuration, setTaskDuration ] = useState('Click button "Check"');
   let [ taskNameError, setTaskNameError ] = useState('');
   let [ tasks, setTasks ] = useState([]);
 
@@ -126,13 +127,17 @@ const RuleTimer = (props) => {
     const nowNumber = nowDate.getTime();
 
     const duration = helper.getTaskDuration(startTime, nowNumber);
+    setTaskDuration(duration);
     console.log(duration);
   };
 
   const headerButton = (
-    <Link to='/log'>
-      <button>See completed tasks</button>
-    </Link>
+    <>
+      <Link to='/log'>
+        <button className='button-small-circle blue'>See</button>
+      </Link>
+      <span>completed tasks</span>
+    </>
   );
 
   return (
@@ -143,11 +148,9 @@ const RuleTimer = (props) => {
     headerButton={ headerButton }
     >
       <div className='ruleTimer'>
-        <div className='listContainer'>
-          <ul>
-            { displayTasksList() }
-          </ul>
-        </div>
+        <ul className='listContainer'>
+          { displayTasksList() }
+        </ul>
         <div className='managingBlock'>
           <div className='newTask'>
             <label className='textField'>
@@ -160,18 +163,42 @@ const RuleTimer = (props) => {
               />
             </label>
             <p className='taskNameError'>{ taskNameError }</p>
-            <button onClick={ addNewTask }>Add New Task</button>
+            <button
+            className='button-circle blue'
+            onClick={ addNewTask }
+            >
+              Add
+            </button>
           </div>
           <div className='timer'>
-            <h2>Current task: <span className='currentTaskName'>{ currentTaskName }</span></h2>
+            <h2>
+              Current task:
+              <span className='currentTaskName'>{ currentTaskName }</span>
+            </h2>
             <div className='timerButtons'>
               {
                 startTime ?
                 <>
-                  <button onClick={ showTaskDuration }>Check duration</button>
-                  <button onClick={ stopTimer }>Stop Timer</button>
+                  <button
+                  className='button-circle blue'
+                  onClick={ showTaskDuration }
+                  >
+                    Check
+                  </button>
+                  <p>{ taskDuration }</p>
+                  <button
+                  className='button-circle red'
+                  onClick={ stopTimer }
+                  >
+                    Stop
+                  </button>
                 </> :
-                <button onClick={ startTimer }>Start Timer</button>
+                <button
+                className='button-circle blue'
+                onClick={ startTimer }
+                >
+                  Start
+                </button>
               }
             </div>
           </div>

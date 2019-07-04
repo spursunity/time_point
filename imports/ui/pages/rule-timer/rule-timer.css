@@ -12,14 +12,40 @@
 }
 
 .ruleTimer .listContainer {
-  width: 20%;
-  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 0;
+  height: calc(100vh - 70px - 50px);
+  width: 25%;
+  background-color: #7EC6F1;
+  border: 2px solid #fff;
   color: #000;
+  font-size: 1.5rem;
+  padding: 1rem;
+  padding-left: 2rem;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.ruleTimer .listContainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .ruleTimer .taskItem {
   list-style-type: none;
   cursor: pointer;
+  word-wrap: break-word;
+  display: block;
+  border-bottom: .3rem solid #fff;
+  padding-top: .5rem;
+}
+
+.ruleTimer .taskItem:hover {
+  background-color: #0D496E;
+  color: #fff;
 }
 
 .ruleTimer .managingBlock {
@@ -42,27 +68,47 @@
 .ruleTimer .newTaskName {
   width: 100%;
   font-size: 1.5rem;
+  border: 2px solid #fff;
+  background-color: rgba(126, 198, 241, .6);
+  outline: none;
+  color: #0D496E;
+  padding: .5rem;
+  border-radius: .5rem;
 }
+
+.ruleTimer .newTaskName:focus {
+  border: 2px solid #0D496E;
+}
+
 .ruleTimer .taskNameError {
   width: 100%;
   padding: 0;
   margin: 0;
   height: 1rem;
   font-size: .8rem;
+  color: #f00;
 }
 
 .ruleTimer .textField {
+  padding: 1.5rem;
   display: block;
   text-align: center;
+  background-color: rgba(126, 198, 241, .6);
 }
 
 .ruleTimer .timer {
+  width: 80%;
   background-color: rgba(126, 198, 241, .6);
   padding: 20px;
 }
 
+.timer h2 {
+  text-align: center;
+}
+
 .ruleTimer .currentTaskName {
   font-style: italic;
+  font-weight: normal;
 }
 
 .ruleTimer .currentDescriptionTitle {
