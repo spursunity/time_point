@@ -13,16 +13,13 @@ const taskHelper = new TaskHelper();
 
 if (Meteor.isServer) {
   try {
-    WebApp.connectHandlers.use(session({
-      secret: 'peninsula',
-      resave: false,
-      saveUninitialized: true,
-      cookie: { maxAge: 300000 },
-    }));
-
     WebApp.connectHandlers.use((req, res, next) => {
       token = req.session.token;
-      if (token) uid = taskHelper.getUidFromToken(token);
+      if (token) {
+        uid = taskHelper.getUidFromToken(token);
+      } else {
+        uid = null;
+      }
 
       next();
     });
@@ -119,7 +116,7 @@ Meteor.methods({
   async 'tasks.getTasksInfo'() {
     try {
       if (! uid) return false;
-      
+
       const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } }) || { tasksInfo: [] };
       let sortedTasksInfo;
 
