@@ -23,6 +23,14 @@ if (Meteor.isServer) {
     WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));
 
     WebApp.connectHandlers.use((req, res, next) => {
+      if (req.query && req.query.logout) {
+        req.session.token = null;
+      }
+
+      next();
+    });
+
+    WebApp.connectHandlers.use((req, res, next) => {
       initialData = {};
 
       if (req.session.token) initialData.hasToken = true;

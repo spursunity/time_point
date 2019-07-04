@@ -43,6 +43,16 @@ const RuleTimer = (props) => {
     props.history.push('/');
   };
 
+  const redirectWithLogout = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/?logout=true');
+      props.history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const changeTaskName = (event) => {
     taskNameText = event.target.value;
 
@@ -146,6 +156,7 @@ const RuleTimer = (props) => {
     <Basis
     headerText={ 'Rule your time' }
     headerButton={ headerButton }
+    logout={ redirectWithLogout }
     >
       <div className='ruleTimer'>
         <ul className='listContainer'>

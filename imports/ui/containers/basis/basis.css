@@ -37,6 +37,15 @@
   width: 100%;
 }
 
+.basis .logout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+  width: 4.3rem;
+  height: 4.3rem;
+}
+
 .basis footer {
   min-width: 100%;
   background-color: #0D496E;

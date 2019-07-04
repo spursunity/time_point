@@ -8,7 +8,7 @@ import { check } from 'meteor/check';
 
 import './time-log.css';
 
-const TimeLog = () => {
+const TimeLog = (props) => {
   let [ loading, setLoading ] = useState(true);
   let [ tasksInfo, setTasksInfo ] = useState([]);
 
@@ -28,6 +28,16 @@ const TimeLog = () => {
 
   const redirectToStartPage = () => {
     props.history.push('/');
+  };
+
+  const redirectWithLogout = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/?logout=true');
+      props.history.push('/');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const displayTasksData = () => {
@@ -60,6 +70,7 @@ const TimeLog = () => {
     <Basis
     headerText={ 'Your time is here' }
     headerButton={ headerButton }
+    logout={ redirectWithLogout }
     >
       <div className='timeLog'>
         <div className='tasksList'>
