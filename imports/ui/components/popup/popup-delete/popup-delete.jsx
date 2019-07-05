@@ -4,6 +4,17 @@ import PropTypes from 'prop-types';
 import './popup-delete.css';
 
 const PopupDelete = (props) => {
+  const shortenTaskName = () => {
+    const { deletedItem } = props;
+
+    if (deletedItem.length > 8) {
+      const shortName = deletedItem.slice(0, 8);
+
+      return `${shortName}...`;
+    }
+    return deletedItem;
+  };
+
   return (
     <div className='layout'>
       <div className='popupDelete'>
@@ -25,7 +36,7 @@ const PopupDelete = (props) => {
           >
             Delete
           </button>
-          <span className='sideText'>{ props.deletedItem }</span>
+          <span className='sideText'>{ shortenTaskName() }</span>
         </div>
       </div>
     </div>
