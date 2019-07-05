@@ -49,13 +49,13 @@ button {
   box-shadow: 0 0 10px 5px rgba(126, 198, 241, .6);
 }
 
-.button-circle.red {
+.button-circle.red, .button-small-circle.red {
   background-color: #E9415D;
   color: #fff;
   border: 2px solid #fff;
 }
 
-.button-circle.red:hover {
+.button-circle.red:hover, .button-small-circle.red:hover {
   background-color: #fff;
   color: #E9415D;
   border: 2px solid #E9415D;

@@ -41,11 +41,24 @@
   display: block;
   border-bottom: .3rem solid #fff;
   padding-top: .5rem;
+  padding-right: 2rem;
+  position: relative;
 }
 
 .ruleTimer .taskItem:hover {
   background-color: #0D496E;
   color: #fff;
+}
+
+.ruleTimer .taskItem:hover .button-small-circle.deleteTask {
+  display: block;
+}
+
+.ruleTimer .button-small-circle.deleteTask {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: none;
 }
 
 .ruleTimer .managingBlock {

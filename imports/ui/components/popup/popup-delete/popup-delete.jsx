@@ -9,12 +9,22 @@ const PopupDelete = (props) => {
       <div className='popupDelete'>
         <div className='buttonContainer'>
           <span className='sideText'>Oops:)</span>
-          <button className='button-circle blue'>Back</button>
+          <button
+          className='button-circle blue'
+          onClick={ props.cancelDeletion }
+          >
+            Back
+          </button>
           <span className='sideText'>(no delete)</span>
         </div>
         <div className='buttonContainer'>
           <span className='sideText'>Sure,</span>
-          <button className='button-circle red'>Delete</button>
+          <button
+          className='button-circle red'
+          onClick={ props.deleteTask }
+          >
+            Delete
+          </button>
           <span className='sideText'>{ props.deletedItem }</span>
         </div>
       </div>
@@ -24,6 +34,8 @@ const PopupDelete = (props) => {
 
 PopupDelete.propTypes = {
   deletedItem: PropTypes.string.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  cancelDeletion: PropTypes.func.isRequired,
 };
 
 export default PopupDelete;

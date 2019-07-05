@@ -6,17 +6,19 @@ import { Link } from 'react-router-dom';
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
 import RuleTimerHelper from './helper';
+import PopupDelete from '../../components/popup/popup-delete/popup-delete.jsx';
 
 import './rule-timer.css';
 
 const RuleTimer = (props) => {
   let [ loading, setLoading ] = useState(true);
   let [ newTaskName, setNewTaskName ] = useState('');
-  let [ currentTaskName, setCurrentTaskName ] = useState('No chosen');
+  let [ currentTaskName, setCurrentTaskName ] = useState(null);
   let [ startTime, setStartTime ] = useState(0);
   let [ taskDuration, setTaskDuration ] = useState('Click button "Check"');
   let [ taskNameError, setTaskNameError ] = useState('');
   let [ tasks, setTasks ] = useState([]);
+  let [ deletedTask, setDeletedTask ] = useState(null);
 
   useEffect(() => {
     Meteor.call('tasks.getInitialData', (err, res) => {
@@ -60,6 +62,12 @@ const RuleTimer = (props) => {
     setTaskNameError('');
   };
 
+  const changeCurrentTaskName = (taskName) => {
+    if (! startTime) {
+      setCurrentTaskName(taskName);
+    }
+  };
+
   const addNewTask = () => {
     if (tasks.includes(newTaskName)) {
       setTaskNameError('You already have such a task');
@@ -88,24 +96,25 @@ const RuleTimer = (props) => {
           <li
           className='taskItem'
           key={ index }
-          onClick={ chooseCurrentTask }
+          onClick={ () => changeCurrentTaskName(taskName) }
           >
             { taskName }
+            {
+              taskName === currentTaskName && startTime ?
+              '' :
+              <button
+              className='button-small-circle red deleteTask'
+              onClick={ () => setDeletedTask(taskName) }
+              >
+                Del
+              </button>
+            }
           </li>
         );
       });
     } else {
       return '';
     }
-  };
-
-  const chooseCurrentTask = (event) => {
-    if (startTime > 0) return;
-
-    const chosenTask = event.currentTarget.textContent;
-    check(chosenTask, String);
-
-    if (chosenTask) setCurrentTaskName(chosenTask);
   };
 
   const startTimer = () => {
@@ -126,7 +135,7 @@ const RuleTimer = (props) => {
 
         if (res) {
           setStartTime(0);
-          setCurrentTaskName('No chosen');
+          setCurrentTaskName(null);
         }
       });
     }
@@ -141,6 +150,23 @@ const RuleTimer = (props) => {
     console.log(duration);
   };
 
+  const deleteTask = () => {
+    setLoading(true);
+    Meteor.call('tasks.deleteTaskName', deletedTask, (err, res) => {
+      if (err) throw new Meteor.Error('cannot delete');
+      check(res, Array);
+
+      setTasks(res);
+      setDeletedTask(null);
+      setCurrentTaskName(null);
+      setLoading(false);
+    });
+  };
+
+  const cancelDeletion = () => {
+    setDeletedTask(null);
+  };
+
   const headerButton = (
     <>
       <Link to='/log'>
@@ -153,69 +179,80 @@ const RuleTimer = (props) => {
   return (
     loading ?
     <Loading /> :
-    <Basis
-    headerText={ 'Rule your time' }
-    headerButton={ headerButton }
-    logout={ redirectWithLogout }
-    >
-      <div className='ruleTimer'>
-        <ul className='listContainer'>
-          { displayTasksList() }
-        </ul>
-        <div className='managingBlock'>
-          <div className='newTask'>
-            <label className='textField'>
-              New Task Name<br/>
-              <input
-              className='newTaskName'
-              type='text'
-              onChange={ changeTaskName }
-              onKeyUp={ keyEnterHandler }
-              />
-            </label>
-            <p className='taskNameError'>{ taskNameError }</p>
-            <button
-            className='button-circle blue'
-            onClick={ addNewTask }
-            >
-              Add
-            </button>
-          </div>
-          <div className='timer'>
-            <h2>
-              Current task:
-              <span className='currentTaskName'>{ currentTaskName }</span>
-            </h2>
-            <div className='timerButtons'>
-              {
-                startTime ?
-                <>
+    <>
+      <Basis
+      headerText={ 'Rule your time' }
+      headerButton={ headerButton }
+      logout={ redirectWithLogout }
+      >
+        <div className='ruleTimer'>
+          <ul className='listContainer'>
+            { displayTasksList() }
+          </ul>
+          <div className='managingBlock'>
+            <div className='newTask'>
+              <label className='textField'>
+                New Task Name<br/>
+                <input
+                className='newTaskName'
+                type='text'
+                onChange={ changeTaskName }
+                onKeyUp={ keyEnterHandler }
+                />
+              </label>
+              <p className='taskNameError'>{ taskNameError }</p>
+              <button
+              className='button-circle blue'
+              onClick={ addNewTask }
+              >
+                Add
+              </button>
+            </div>
+            <div className='timer'>
+              <h2>
+                Current task:
+                <span className='currentTaskName'>{ currentTaskName || 'No chosen' }</span>
+              </h2>
+              <div className='timerButtons'>
+                {
+                  startTime ?
+                  <>
+                    <button
+                    className='button-circle blue'
+                    onClick={ showTaskDuration }
+                    >
+                      Check
+                    </button>
+                    <p>{ taskDuration }</p>
+                    <button
+                    className='button-circle red'
+                    onClick={ stopTimer }
+                    >
+                      Stop
+                    </button>
+                  </> :
                   <button
                   className='button-circle blue'
-                  onClick={ showTaskDuration }
+                  onClick={ startTimer }
                   >
-                    Check
+                    Start
                   </button>
-                  <p>{ taskDuration }</p>
-                  <button
-                  className='button-circle red'
-                  onClick={ stopTimer }
-                  >
-                    Stop
-                  </button>
-                </> :
-                <button
-                className='button-circle blue'
-                onClick={ startTimer }
-                >
-                  Start
-                </button>
-              }
+                }
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Basis>
+      </Basis>
+      {
+        deletedTask ?
+        <PopupDelete
+        deletedItem={ deletedTask }
+        deleteTask={ deleteTask }
+        cancelDeletion={ cancelDeletion }
+        /> :
+        ''
+      }
+    </>
   )
 };
 
