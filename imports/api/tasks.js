@@ -131,4 +131,24 @@ Meteor.methods({
       console.log('Meteor methods - tasks - getTasksInfo - ', err);
     }
   },
+  async 'tasks.deleteTaskName'(taskName) {
+    try {
+      check(taskName, String);
+
+      const { currentTaskName } = await Tasks.findOne({ owner: uid }, { fields: { currentTaskName: 1 } }) || { currentTaskName: null };
+
+      if (currentTaskName === taskName) throw new Meteor.Error('attempt to delete current task');
+
+      const responseStatus = await Tasks.update({ owner: uid }, { $pull: { tasksNames: taskName} });
+
+      if (responseStatus !== 1) throw new Meteor.Error('no delete');
+
+      const { tasksNames } = Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1 } }) || { tasksNames: null };
+      check(tasksNames, Array);
+
+      return tasksNames;
+    } catch (err) {
+      console.log('Meteor methods - tasks - deleteTaskName - ', err);
+    }
+  },
 })
