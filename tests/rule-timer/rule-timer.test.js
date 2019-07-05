@@ -104,5 +104,17 @@ describe('TimePoint rule timer - ', () => {
 
       done();
     });
+
+    it('delete task from tasks list', async (done) => {
+      const deleteTaskName = Meteor.server.method_handlers['tasks.deleteTaskName'];
+      deleteTaskName.bind(context);
+
+      const updatedTasksNames = await deleteTaskName(newTaskName01);
+
+      updatedTasksNames.should.be.a('array');
+      updatedTasksNames.length.should.equal(1);
+
+      done();
+    });
   }
 });
