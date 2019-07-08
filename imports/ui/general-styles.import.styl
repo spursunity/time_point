@@ -1,0 +1,190 @@
+// constants
+dark-blue = #0D496E
+light-blue = #7EC6F1
+light-blue-transparency = rgba(126, 198, 241, .6)
+red = #E9415D
+red-transparency = rgba(233, 65, 93, .6)
+black-transparency = rgba(0, 0, 0, .6)
+basis-header-height = 70px
+basis-footer-height = 50px
+fsize-big = 2rem
+fsize-middle = 1.5rem
+fsize-small = .8rem
+// functions
+basis-inner-height()
+	'calc(100vh - %s - %s)' % (basis-header-height basis-footer-height)
+
+colors-f(bc = #fff, col = #000)
+	background-color: bc
+	color: col
+
+border-f(col)
+	border: 2px solid col
+
+btn-cir(w, h, p)
+	width: w
+	height: h
+	border-radius: 50%
+	padding: p
+
+btn-col(bc, col, sha-col)
+	colors-f(bc, col)
+	border-f(col)
+	border: 2px solid col
+	if sha-col
+		box-shadow: 0 0 10px 5px sha-col
+
+flex-f(fd = row, jc = center, ai = center)
+	display: flex
+	flex-direction: fd
+	justify-content: jc
+	align-items: ai
+
+container(h = 100vh, w = 100vw)
+	height: h
+	width: w
+
+background-image-f(path, re = no-repeat, att = fixed)
+	background: url(path) re att
+// animations
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(360deg);
+  }
+  30% {
+    transform: rotate(370deg);
+  }
+  35% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-180deg);
+  }
+  35% {
+    transform: rotate(-190deg);
+  }
+  40% {
+    transform: rotate(-180deg);
+  }
+  78% {
+    transform: rotate(-180deg);
+  }
+  95% {
+    transform: rotate(-360deg);
+  }
+  98% {
+    transform: rotate(-370deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spin3 {
+  0% {
+    transform: rotate(0deg);
+  }
+  27% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(180deg);
+  }
+  45% {
+    transform: rotate(190deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  62% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  80% {
+    transform: rotate(370deg);
+  }
+  85% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin4 {
+  0% {
+    transform: rotate(0deg);
+  }
+  38% {
+    transform: rotate(0deg);
+  }
+  60% {
+    transform: rotate(-360deg);
+  }
+  65% {
+    transform: rotate(-370deg);
+  }
+  75% {
+    transform: rotate(-360deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+// general selectors for the entire app
+html
+	margin: 0
+	padding: 0
+	min-height: 100%
+
+*
+	box-sizing: border-box
+
+body
+	margin: 0
+	padding: 0
+	min-height: 100vh
+	font-family: sans-serif
+
+	button
+		cursor: pointer
+		outline: none
+
+	.button
+		&-circle
+			btn-cir(5.5rem, 5.5rem, .3rem)
+			font-size: 1.5rem
+			font-weight: bold
+		&-small-circle
+			btn-cir(2rem, 2rem, 0)
+
+		&-circle
+		&-small-circle
+			&.blue
+				btn-col(dark-blue, #fff, 0)
+
+				&:hover
+					btn-col(#fff, dark-blue, light-blue-transparency)
+
+			&.red
+				btn-col(red, #fff, 0)
+
+				&:hover
+					btn-col(#fff, red, red-transparency)
