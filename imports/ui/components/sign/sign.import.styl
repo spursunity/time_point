@@ -1,0 +1,29 @@
+.signForm
+  flex-f(column, flex-start)
+  padding: .7rem
+
+  .signField
+    flex-f(, space-between)
+    width: 90%
+    padding-top: .3rem
+
+    &:last-of-types
+      margin-bottom: 1.2rem
+
+    div
+      width: 50%
+
+      .hint
+        container(.8rem, 100%)
+        margin: 0
+        padding: 0
+        font-size: fsize-small
+
+    input
+      font-size: fsize-middle
+      outline: none
+      width: 100%
+      padding: 0 .3rem
+
+  .invisible
+    visibility: hidden

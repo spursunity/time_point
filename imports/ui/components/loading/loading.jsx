@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './loading.css';
-
 const Loading = () => {
   return (
     <div className='loading'>

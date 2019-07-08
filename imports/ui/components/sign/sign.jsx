@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Users from '../../../api/users';
 
-import './sign.css';
-
 const Sign = ({ trySignIn, redirect, authError }) => {
   let [ username, setUsername ] = useState('');
   let [ password, setPassword ] = useState('');

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './popup-delete.css';
-
 const PopupDelete = (props) => {
   const shortenTaskName = () => {
     const { deletedItem } = props;

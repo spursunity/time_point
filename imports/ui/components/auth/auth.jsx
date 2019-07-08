@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Sign from '../sign/sign.jsx';
 
-import './auth.css';
-
 const Auth = ({ redirect, authError }) => {
   let [ trySignIn, setTrySignIn ] = useState(true);
 
