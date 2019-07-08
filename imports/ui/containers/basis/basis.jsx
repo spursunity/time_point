@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './basis.css';
-
 const Basis = (props) => {
   return (
     <div className='basis'>
-      <header>
+      <header className='basisHeader'>
         <h1 className='headerTitle'>{ props.headerText || 'TimePoint' }</h1>
         <div className='headerButton'>{ props.headerButton || '' }</div>
         {
@@ -21,7 +19,7 @@ const Basis = (props) => {
         }
       </header>
       { props.children }
-      <footer>Footer</footer>
+      <footer className='basisFooter'>Footer</footer>
     </div>
   )
 }

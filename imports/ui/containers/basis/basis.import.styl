@@ -1,0 +1,29 @@
+.basis
+  container()
+  flex-f(column, space-between, stretch)
+
+  .basisHeader
+    container(basis-header-height, 100%)
+    colors-f(light-blue, dark-blue)
+    flex-f(column, space-around)
+
+    .headerTitle
+      font-size: fsize-big
+      margin: 0
+
+    .headerButton
+      container(30%, 100%)
+      flex-f(, flex-start,)
+      padding: 0 2rem
+
+    .logout
+      container(4.3rem, 4.3rem)
+      position: absolute
+      top: 0
+      right: 0
+      padding: 0
+
+  .basisFooter
+    container(basis-footer-height, 100%)
+    colors-f(dark-blue, white)
+    font-size: fsize-big
