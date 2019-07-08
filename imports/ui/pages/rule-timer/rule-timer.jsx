@@ -209,7 +209,7 @@ const RuleTimer = (props) => {
               </button>
             </div>
             <div className='timer'>
-              <h2>
+              <h2 className='timerTitle'>
                 Current task:
                 <span className='currentTaskName'>{ currentTaskName || 'No chosen' }</span>
               </h2>

@@ -6,8 +6,6 @@ import Basis from '../../containers/basis/basis.jsx';
 import Auth from '../../components/auth/auth.jsx';
 import Loading from '../../components/loading/loading.jsx';
 
-import './start-page.css';
-
 const StartPage = (props) => {
   let [ authError, setAuthError ] = useState({});
   let [ loading, setLoading ] = useState(true);
