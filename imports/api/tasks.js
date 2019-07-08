@@ -122,7 +122,7 @@ Meteor.methods({
 
       if (tasksInfo.length > 1) {
         sortedTasksInfo = tasksInfo.sort((taskA, taskB) => {
-          return taskA.stopTime - taskB.stopTime;
+          return taskB.stopTime - taskA.stopTime;
         });
       }
 
