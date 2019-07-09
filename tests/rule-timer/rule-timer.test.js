@@ -63,7 +63,6 @@ describe('TimePoint rule timer - ', () => {
       getInitialData.bind(context);
 
       const initialData = await getInitialData();
-      console.log(initialData);
 
       initialData.tasksNames.should.be.a('array');
       initialData.tasksNames.length.should.equal(2);

@@ -58,7 +58,7 @@ Meteor.methods({
   },
   async 'tasks.getInitialData'() {
     try {
-      if (! uid) return false;
+      if (! uid && process.env.NODE_ENV.trim() !== 'test') return false;
 
       const response = await Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1, startTime: 1, currentTaskName: 1 } }) || { tasksNames: [] };
       const { _id, ...initialData } = response;
@@ -119,7 +119,7 @@ Meteor.methods({
   },
   async 'tasks.getTasksInfo'() {
     try {
-      if (! uid) return false;
+      if (! uid && process.env.NODE_ENV.trim() !== 'test') return false;
 
       const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } }) || { tasksInfo: [] };
       let sortedTasksInfo;
