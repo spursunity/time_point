@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import session from 'express-session';
 import { check } from 'meteor/check';
+import _ from 'lodash';
 
 import TaskHelper from './helpers/task-helper';
 
@@ -35,19 +36,21 @@ Meteor.methods({
       check(tasksCount, Number);
 
       if (tasksCount === 0) {
-        const tasksListId = await Tasks.insert({ owner: uid, tasksNames: [newTaskName] });
+        const tasksListId = await Tasks.insert({ owner: uid, tasksNames: [ newTaskName ] });
 
-        if (! tasksListId) throw new Meteor.Error('mongodb error');
+        if (! tasksListId) throw new Meteor.Error('insert first task name error');
 
-        return [newTaskName];
+        return [ newTaskName ];
       } else if (tasksCount > 0) {
         const updateResponse = await Tasks.update({ owner: uid }, { $push: { tasksNames: newTaskName } });
 
-        if (updateResponse === 0) throw new Meteor.Error('mongodb error');
+        if (updateResponse === 0) throw new Meteor.Error('update tasks names error');
 
-        const tasksList = await Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1 } });
+        const { tasksNames } = await Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1 } }) || { tasksNames: [] };
 
-        return tasksList.tasksNames;
+        if (tasksNames.length === 0) throw new Meteor.Error('find tasks names error');
+
+        return tasksNames;
       }
     } catch (err) {
       console.log('Meteor methods - tasks - addNewTask - ', err);
@@ -72,7 +75,7 @@ Meteor.methods({
 
       const updateResponse = await Tasks.update({ owner: uid }, { $set: { currentTaskName: taskName, startTime: nowNumber } });
 
-      if (updateResponse === 0) throw new Meteor.Error('mongodb error');
+      if (updateResponse === 0) throw new Meteor.Error('update start time error');
 
       return nowNumber;
     } catch (err) {
@@ -81,12 +84,11 @@ Meteor.methods({
   },
   async 'tasks.stopTimer'(taskName) {
     try {
-      const nowDate = new Date();
-      const nowNumber = nowDate.getTime();
+      const nowNumber = _.now();
 
-      const { startTime } = await Tasks.findOne({ owner: uid }, { fields: { startTime: 1 } });
+      const { startTime } = await Tasks.findOne({ owner: uid }, { fields: { startTime: 1 } }) || { startTime: null };
 
-      if (! startTime) throw new Meteor.Error('timer did not start');
+      if (! startTime) throw new Meteor.Error('find start time error');
 
       const durationString = taskHelper.getTaskDuration(startTime, nowNumber);
       const startDate = taskHelper.transformDateToString(startTime);
@@ -99,14 +101,16 @@ Meteor.methods({
         startDate,
         stopDate,
       };
-      const updateResponse = await Tasks.update({ owner: uid }, { $push: { tasksInfo: taskInfo } });
+      const updateTaskInfoResponse = await Tasks.update({ owner: uid }, { $push: { tasksInfo: taskInfo } });
 
-      if (! updateResponse) {
-        const setResponse = await Tasks.update({ owner: uid }, { $set: { tasksInfo: [taskInfo] } });
+      if (! updateTaskInfoResponse) {
+        const setResponse = await Tasks.update({ owner: uid }, { $set: { tasksInfo: [ taskInfo ] } });
 
-        if (setResponse === 0) throw new Meteor.Error('mongodb error');
+        if (setResponse === 0) throw new Meteor.Error('update task info error');
       }
-      await Tasks.update({ owner: uid }, { $set: { currentTaskName: null, startTime: null } });
+      const updateStartTimeResponse = await Tasks.update({ owner: uid }, { $set: { currentTaskName: null, startTime: null } });
+
+      if (! updateStartTimeResponse) throw new Meteor.Error('update start time error');
 
       return true;
     } catch (err) {
@@ -121,9 +125,7 @@ Meteor.methods({
       let sortedTasksInfo;
 
       if (tasksInfo.length > 1) {
-        sortedTasksInfo = tasksInfo.sort((taskA, taskB) => {
-          return taskB.stopTime - taskA.stopTime;
-        });
+        sortedTasksInfo = _.sortBy(tasksInfo, [ (info) => -info.stopTime ]);
       }
 
       return sortedTasksInfo || tasksInfo;
@@ -141,7 +143,7 @@ Meteor.methods({
 
       const responseStatus = await Tasks.update({ owner: uid }, { $pull: { tasksNames: taskName} });
 
-      if (responseStatus !== 1) throw new Meteor.Error('no delete');
+      if (responseStatus !== 1) throw new Meteor.Error('update tasks names error');
 
       const { tasksNames } = Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1 } }) || { tasksNames: null };
       check(tasksNames, Array);

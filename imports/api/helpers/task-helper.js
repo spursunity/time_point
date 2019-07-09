@@ -1,5 +1,6 @@
 import Tasks from '../tasks';
 import { check } from 'meteor/check';
+import _ from 'lodash';
 const jwt = require('jsonwebtoken');
 
 export default class TaskHelper {
@@ -24,13 +25,13 @@ export default class TaskHelper {
       const hourMs = minuteMs * 60;
       const dayMs = hourMs * 24;
 
-      const days = Math.floor(diffTime / dayMs);
+      const days = _.floor(diffTime / dayMs);
       diffTime -= days * dayMs;
 
-      const hours = Math.floor(diffTime / hourMs);
+      const hours = _.floor(diffTime / hourMs);
       diffTime -= hours * hourMs;
 
-      const minutes = Math.round(diffTime / minuteMs);
+      const minutes = _.round(diffTime / minuteMs);
 
       return `${days} day(-s), ${hours} hour(-s), ${minutes} minute(-s)`;
     } catch (err) {
@@ -48,9 +49,9 @@ export default class TaskHelper {
       const minutes = date.getMinutes();
       const day = date.getDate();
       const monthNumber = date.getMonth();
-      const month = monthsArray[monthNumber];
+      const month = monthsArray[ monthNumber ];
       const weekdayNumber = date.getDay();
-      const weekday = weekdaysArray[weekdayNumber];
+      const weekday = weekdaysArray[ weekdayNumber ];
       const year = date.getFullYear();
 
       const hoursString = this.transformTimeToString(hours);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { check } from 'meteor/check';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import _ from 'lodash';
 
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
@@ -22,7 +23,7 @@ const RuleTimer = (props) => {
 
   useEffect(() => {
     Meteor.call('tasks.getInitialData', (err, res) => {
-      if (err) throw new Meteor.Error('cannot get tasks');
+      if (err) throw new Meteor.Error('get initial data error');
       if (! res) {
         redirectToStartPage();
         return;
@@ -73,7 +74,7 @@ const RuleTimer = (props) => {
   };
 
   const addNewTask = () => {
-    if (tasks.includes(newTaskName)) {
+    if (tasks.includes(newTaskName.trim())) {
       setTaskNameError('You already have such a task');
       return;
     }
@@ -81,7 +82,7 @@ const RuleTimer = (props) => {
     setNewTaskName(newTaskName.trim());
 
     Meteor.call('tasks.addNewTask', newTaskName, tasksCount, (err, res) => {
-      if (err) throw new Meteor.Error('cannot get tasks');
+      if (err) throw new Meteor.Error('cannot add new task');
       check(res, Array);
       setTasks(res);
     });
@@ -95,7 +96,7 @@ const RuleTimer = (props) => {
 
   const displayTasksList = () => {
     if (tasks && tasks.length > 0) {
-      return tasks.map((taskName, index) => {
+      return _.map(tasks, (taskName, index) => {
         return (
           <li
           className='taskItem'
@@ -124,7 +125,7 @@ const RuleTimer = (props) => {
   const startTimer = () => {
     if (tasks.includes(currentTaskName)) {
       Meteor.call('tasks.startTimer', currentTaskName, (err, res) => {
-        if (err) throw new Meteor.Error('startTime error');
+        if (err) throw new Meteor.Error('start timer error');
         check(res, Number);
 
         setStartTime(res);
@@ -135,7 +136,7 @@ const RuleTimer = (props) => {
   const stopTimer = () => {
     if (currentTaskName && currentTaskName.length) {
       Meteor.call('tasks.stopTimer', currentTaskName, (err, res) => {
-        if (err) throw new Meteor.Error('stopTimer error');
+        if (err) throw new Meteor.Error('stop timer error');
 
         if (res) {
           setStartTime(0);
@@ -146,18 +147,16 @@ const RuleTimer = (props) => {
   };
 
   const showTaskDuration = () => {
-    const nowDate = new Date();
-    const nowNumber = nowDate.getTime();
+    const nowNumber = _now();
 
     const duration = helper.getTaskDuration(startTime, nowNumber);
     setTaskDuration(duration);
-    console.log(duration);
   };
 
   const deleteTask = () => {
     setLoading(true);
     Meteor.call('tasks.deleteTaskName', deletedTask, (err, res) => {
-      if (err) throw new Meteor.Error('cannot delete');
+      if (err) throw new Meteor.Error('delete task name error');
       check(res, Array);
 
       setTasks(res);

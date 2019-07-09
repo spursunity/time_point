@@ -38,7 +38,7 @@ const Sign = ({ trySignIn, redirect, authError }) => {
     setPasswordCopy(passwordCopyText);
   };
 
-  const submitForm = async (event) => {
+  const submitForm = (event) => {
     event.preventDefault();
 
     if (buttonDisabled) return;

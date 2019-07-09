@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import _ from 'lodash';
 
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
@@ -14,7 +15,7 @@ const TimeLog = (props) => {
 
   useEffect(() => {
     Meteor.call('tasks.getTasksInfo', (err, res) => {
-      if (err) throw new Meteor.Error('cannot get tasks info');
+      if (err) throw new Meteor.Error('get tasks info error');
       if (! res) {
         redirectToStartPage();
         return;
@@ -46,7 +47,7 @@ const TimeLog = (props) => {
 
   const displayTasksData = () => {
     return (
-      tasksInfo.map((taskData, index) => {
+      _.map(tasksInfo, (taskData, index) => {
         return (
           <div className='taskBlock' key={ index }>
             <p className='field'><span className='fieldTitle'>Task: </span>{ taskData.name }</p>
