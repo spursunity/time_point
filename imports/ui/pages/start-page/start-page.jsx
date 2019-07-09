@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import Basis from '../../containers/basis/basis.jsx';
 import Auth from '../../components/auth/auth.jsx';
@@ -26,7 +27,7 @@ const StartPage = (props) => {
   }, []);
 
   const redirectToTimerPage = () => {
-    props.history.push('/timer');
+    FlowRouter.go('/timer');
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
@@ -27,14 +27,18 @@ const TimeLog = (props) => {
   }, []);
 
   const redirectToStartPage = () => {
-    props.history.push('/');
+    FlowRouter.go('/');
+  };
+
+  const redirectToRuleTimer = () => {
+    FlowRouter.go('/timer');
   };
 
   const redirectWithLogout = async () => {
     try {
       setLoading(true);
       const res = await fetch('/?logout=true');
-      props.history.push('/');
+      FlowRouter.go('/');
     } catch (err) {
       console.log(err);
     }
@@ -57,9 +61,12 @@ const TimeLog = (props) => {
 
   const headerButton = (
     <>
-      <Link to='/timer'>
-        <button className='button-small-circle blue'>See</button>
-      </Link>
+      <button
+      className='button-small-circle blue'
+      onClick={ redirectToRuleTimer }
+      >
+        See
+      </button>
       <span>timer</span>
     </>
   );
