@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import config from '../../../../config.js';
+
 const Basis = (props) => {
+  const { headerTitles } = config;
+
   return (
     <div className='basis'>
       <header className='basisHeader'>
-        <h1 className='headerTitle'>{ props.headerText || 'TimePoint' }</h1>
+        <h1 className='headerTitle'>{ props.headerText || headerTitles.DEFAULT }</h1>
         <div className='headerButton'>{ props.headerButton || '' }</div>
         {
           props.logout ?

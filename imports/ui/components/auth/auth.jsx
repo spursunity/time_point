@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Sign from '../sign/sign.jsx';
 
-const Auth = ({ redirect, authError }) => {
+const Auth = ({ authError }) => {
   let [ trySignIn, setTrySignIn ] = useState(true);
 
   const setSignIn = () => {
@@ -35,7 +35,6 @@ const Auth = ({ redirect, authError }) => {
       <div>
         <Sign
         trySignIn={ trySignIn }
-        redirect={ redirect }
         authError={ authError }
         />
       </div>
@@ -43,8 +42,6 @@ const Auth = ({ redirect, authError }) => {
   );
 };
 
-Auth.propTypes = {
-  redirect: PropTypes.func.isRequired,
-};
+Auth.propTypes = {};
 
 export default Auth;

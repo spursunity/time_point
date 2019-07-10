@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Users from '../../../api/users';
+import config from '../../../../config.js';
 
-const Sign = ({ trySignIn, redirect, authError }) => {
+const Sign = ({ trySignIn, authError }) => {
   let [ username, setUsername ] = useState('');
   let [ password, setPassword ] = useState('');
   let [ passwordCopy, setPasswordCopy ] = useState('');
@@ -19,6 +20,7 @@ const Sign = ({ trySignIn, redirect, authError }) => {
 
   const elementVisibility = trySignIn ? 'invisible' : '';
   const repeatPassClass = `signField ${elementVisibility}`;
+  const { routes } = config;
 
   const changeUsername = (event) => {
     const usernameText = event.target.value;
@@ -53,7 +55,7 @@ const Sign = ({ trySignIn, redirect, authError }) => {
     className='signForm'
     onSubmit={ submitForm }
     method='post'
-    action='/'
+    action={ routes.START_PAGE }
     >
       <label className='signField'>
         <span>Username</span>
@@ -118,7 +120,6 @@ const Sign = ({ trySignIn, redirect, authError }) => {
 
 Sign.propTypes = {
   trySignIn: PropTypes.bool.isRequired,
-  redirect: PropTypes.func.isRequired,
   authError: PropTypes.object.isRequired,
 };
 
