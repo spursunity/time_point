@@ -4,6 +4,7 @@ import session from 'express-session';
 const bodyParser = require('body-parser');
 
 import SignHelper from './helpers/sign-helper';
+import config from '../../config.js';
 
 export default Users = new Mongo.Collection('users');
 
@@ -14,10 +15,10 @@ if (Meteor.isServer) {
     const signHelper = new SignHelper();
 
     WebApp.connectHandlers.use(session({
-      secret: 'peninsula',
+      secret: config.envs.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: 300000 },
+      cookie: { maxAge: parseInt(config.envs.SESSION_MAX_AGE, 10) },
     }));
 
     WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));

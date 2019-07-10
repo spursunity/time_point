@@ -3,14 +3,16 @@ import { check } from 'meteor/check';
 import _ from 'lodash';
 const jwt = require('jsonwebtoken');
 
+import config from '../../../config.js';
+
+// month-day(47;48)
+
 export default class TaskHelper {
-  constructor() {
-    this.jwtKey = 'venovat-pozornost';
-  }
+  constructor() {}
 
   getUidFromToken(token) {
     try {
-      const decoded = jwt.verify(token, this.jwtKey);
+      const decoded = jwt.verify(token, config.envs.JWT_KEY);
 
       return decoded['_id'];
     } catch (err) {

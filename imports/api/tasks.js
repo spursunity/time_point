@@ -8,18 +8,16 @@ import TaskHelper from './helpers/task-helper';
 
 export default Tasks = new Mongo.Collection('tasks');
 
-let token = '';
-let uid = '';
+let authData = {};
 const taskHelper = new TaskHelper();
 
 if (Meteor.isServer) {
   try {
     WebApp.connectHandlers.use((req, res, next) => {
-      token = req.session.token;
-      if (token) {
-        uid = taskHelper.getUidFromToken(token);
-      } else {
-        uid = null;
+      authData = {};
+      authData.token = req.session.token;
+      if (authData.token) {
+        authData.uid = taskHelper.getUidFromToken(authData.token);
       }
 
       next();
@@ -34,6 +32,8 @@ Meteor.methods({
     try {
       check(newTaskName, String);
       check(tasksCount, Number);
+
+      const { uid } = authData;
 
       if (tasksCount === 0) {
         const tasksListId = await Tasks.insert({ owner: uid, tasksNames: [ newTaskName ] });
@@ -58,6 +58,8 @@ Meteor.methods({
   },
   async 'tasks.getInitialData'() {
     try {
+      const { uid } = authData;
+
       if (! uid && process.env.NODE_ENV.trim() !== 'test') return false;
 
       const response = await Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1, startTime: 1, currentTaskName: 1 } }) || { tasksNames: [] };
@@ -70,8 +72,8 @@ Meteor.methods({
   },
   async 'tasks.startTimer'(taskName) {
     try {
-      const nowDate = new Date();
-      const nowNumber = nowDate.getTime();
+      const { uid } = authData;
+      const nowNumber = _.now();
 
       const updateResponse = await Tasks.update({ owner: uid }, { $set: { currentTaskName: taskName, startTime: nowNumber } });
 
@@ -84,6 +86,7 @@ Meteor.methods({
   },
   async 'tasks.stopTimer'(taskName) {
     try {
+      const { uid } = authData;
       const nowNumber = _.now();
 
       const { startTime } = await Tasks.findOne({ owner: uid }, { fields: { startTime: 1 } }) || { startTime: null };
@@ -119,6 +122,8 @@ Meteor.methods({
   },
   async 'tasks.getTasksInfo'() {
     try {
+      const { uid } = authData;
+
       if (! uid && process.env.NODE_ENV.trim() !== 'test') return false;
 
       const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } }) || { tasksInfo: [] };
@@ -136,6 +141,8 @@ Meteor.methods({
   async 'tasks.deleteTaskName'(taskName) {
     try {
       check(taskName, String);
+
+      const { uid } = authData;
 
       const { currentTaskName } = await Tasks.findOne({ owner: uid }, { fields: { currentTaskName: 1 } }) || { currentTaskName: null };
 

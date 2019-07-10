@@ -3,9 +3,11 @@ import { check } from 'meteor/check';
 const drupalHash = require('drupal-hash');
 const jwt = require('jsonwebtoken');
 
+import config from '../../../config.js';
+
 export default class SignHelper {
   constructor() {
-    this.jwtKey = 'venovat-pozornost';
+    this.eMessages = config.errorMessages;
   }
 
   async signIn (username, password) {
@@ -14,11 +16,12 @@ export default class SignHelper {
       check(password, String);
 
       const userData = await Users.findOne({ username });
-      if (! userData) return { password: 'Check your Username or/and password' };
-      const { password: hashedPassword, ...sessionData } = userData;
 
+      if (! userData) return { password: this.eMessages.WRONG_USERNAME_PASSWORD };
+      const { password: hashedPassword, ...sessionData } = userData;
       const passwordComparison = drupalHash.checkPassword(password, hashedPassword);
-      if (! passwordComparison) return { password: 'Check your Username or/and password' };
+
+      if (! passwordComparison) return { password: this.eMessages.WRONG_USERNAME_PASSWORD };
 
       return sessionData;
     } catch (err) {
@@ -46,8 +49,8 @@ export default class SignHelper {
   }
 
   createToken (userData) {
-    try {
-      return jwt.sign(userData, this.jwtKey);
+    try 
+{      return jwt.sign(userData, config.envs.JWT_KEY);
     } catch (err) {
       console.log('SignHelper - createToken - ', err);
     }
@@ -58,13 +61,13 @@ export default class SignHelper {
       const errors = {};
 
       if (!! await Users.findOne({ username })) {
-        errors.username = 'That name is already occupied';
+        errors.username = this.eMessages.OCCUPIED_NAME;
       } else if (username === '') {
-        errors.username = 'Fill out this field';
+        errors.username = this.eMessages.EMPTY_USERNAME;
       }
 
       if (password.length < 6) {
-        errors.password = 'Minimal 6 symbols';
+        errors.password = this.eMessages.SHORT_PASSWORD;
       }
 
       if (errors.username || errors.password) return errors;
