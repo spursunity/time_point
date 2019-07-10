@@ -8,14 +8,14 @@ describe('TimePoint rule timer - ', () => {
   if (Meteor.isServer) {
     const username = 'AlbertJohnJackBrienLukeAntonJakson';
     let uid;
-    const context = {};
+    let context = {};
     const newTaskName01 = 'some task';
     const newTaskName02 = 'some task else';
 
     it('get uid - ', async (done) => {
       const uData = await Users.findOne({ username }, { fields: { _id: 1 } });
       uid = uData['_id'];
-      context.uid = uid;
+      context = { authData: { uid } };
 
       uid.should.be.a('string');
 
