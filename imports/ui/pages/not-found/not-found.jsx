@@ -2,14 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import config from '../../../../config.js';
+
 const NotFound = () => {
+  const { routes, headerTitles } = config;
+
   const redirectToStartPage = () => {
-    FlowRouter.go('/');
+    FlowRouter.go(routes.START_PAGE);
   }
 
   return (
     <div className='notFound'>
-      <h1 className='title'>Sorry, Page not found:(</h1>
+      <h1 className='title'>{ headerTitles.NOT_FOUND }</h1>
       <button
       onClick={ redirectToStartPage }
       >

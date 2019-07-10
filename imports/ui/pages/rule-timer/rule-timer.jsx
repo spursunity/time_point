@@ -4,6 +4,8 @@ import { check } from 'meteor/check';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import _ from 'lodash';
 
+import config from '../../../../config.js';
+
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
 import RuleTimerHelper from './helper';
@@ -41,20 +43,21 @@ const RuleTimer = (props) => {
   }, []);
 
   const helper = new RuleTimerHelper();
+  const { routes, urls, errorMessages, keyCodes, headerTitles } = config;
 
   const redirectToStartPage = () => {
-    FlowRouter.go('/');
+    FlowRouter.go(routes.START_PAGE);
   };
 
   const redirectToTimeLog = () => {
-    FlowRouter.go('/log');
+    FlowRouter.go(routes.TIME_LOG);
   };
 
   const redirectWithLogout = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/?logout=true');
-      FlowRouter.go('/');
+      const res = await fetch(urls.LOGOUT);
+      FlowRouter.go(routes.START_PAGE);
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +78,7 @@ const RuleTimer = (props) => {
 
   const addNewTask = () => {
     if (tasks.includes(newTaskName.trim())) {
-      setTaskNameError('You already have such a task');
+      setTaskNameError(errorMessages.OCCUPIED_TASK_NAME);
       return;
     }
     const tasksCount = tasks.length;
@@ -89,7 +92,7 @@ const RuleTimer = (props) => {
   };
 
   const keyEnterHandler = (event) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === keyCodes.ENTER) {
       addNewTask();
     }
   };
@@ -147,7 +150,7 @@ const RuleTimer = (props) => {
   };
 
   const showTaskDuration = () => {
-    const nowNumber = _now();
+    const nowNumber = _.now();
 
     const duration = helper.getTaskDuration(startTime, nowNumber);
     setTaskDuration(duration);
@@ -187,7 +190,7 @@ const RuleTimer = (props) => {
     <Loading /> :
     <>
       <Basis
-      headerText={ 'Rule your time' }
+      headerText={ headerTitles.RULE_TIMER }
       headerButton={ headerButton }
       logout={ redirectWithLogout }
       >

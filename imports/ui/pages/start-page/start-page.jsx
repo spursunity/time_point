@@ -3,6 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import config from '../../../../config.js';
+
 import Basis from '../../containers/basis/basis.jsx';
 import Auth from '../../components/auth/auth.jsx';
 import Loading from '../../components/loading/loading.jsx';
@@ -26,8 +28,10 @@ const StartPage = (props) => {
     });
   }, []);
 
+  const { routes } = config;
+
   const redirectToTimerPage = () => {
-    FlowRouter.go('/timer');
+    FlowRouter.go(routes.RULE_TIMER);
   };
 
   return (
@@ -37,7 +41,6 @@ const StartPage = (props) => {
       <div className='startPage'>
         <div className='signin'>
           <Auth
-          redirect={ redirectToTimerPage }
           authError={ authError }
           />
         </div>

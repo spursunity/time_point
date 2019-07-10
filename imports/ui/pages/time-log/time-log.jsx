@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import _ from 'lodash';
 
+import config from '../../../../config.js';
+
 import Basis from '../../containers/basis/basis.jsx';
 import Loading from '../../components/loading/loading.jsx';
 import { check } from 'meteor/check';
@@ -27,19 +29,21 @@ const TimeLog = (props) => {
     });
   }, []);
 
+  const { routes, urls, headerTitles } = config;
+
   const redirectToStartPage = () => {
-    FlowRouter.go('/');
+    FlowRouter.go(routes.START_PAGE);
   };
 
   const redirectToRuleTimer = () => {
-    FlowRouter.go('/timer');
+    FlowRouter.go(routes.RULE_TIMER);
   };
 
   const redirectWithLogout = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/?logout=true');
-      FlowRouter.go('/');
+      const res = await fetch(urls.LOGOUT);
+      FlowRouter.go(routes.START_PAGE);
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +80,7 @@ const TimeLog = (props) => {
     loading ?
     <Loading /> :
     <Basis
-    headerText={ 'Your time is here' }
+    headerText={ headerTitles.TIME_LOG }
     headerButton={ headerButton }
     logout={ redirectWithLogout }
     >
