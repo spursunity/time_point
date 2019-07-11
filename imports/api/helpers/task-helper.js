@@ -11,7 +11,7 @@ export default class TaskHelper {
 
   getUidFromToken(token) {
     try {
-      const decoded = jwt.verify(token, Meteor.settings.JWT_KEY);
+      const decoded = jwt.verify(token, config.envs.JWT_KEY);
 
       return decoded['_id'];
     } catch (err) {

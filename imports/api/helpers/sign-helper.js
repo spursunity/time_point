@@ -50,8 +50,8 @@ export default class SignHelper {
   }
 
   createToken (userData) {
-    try 
-{      return jwt.sign(userData, Meteor.settings.JWT_KEY);
+    try
+{      return jwt.sign(userData, config.envs.JWT_KEY);
     } catch (err) {
       console.log('SignHelper - createToken - ', err);
     }
