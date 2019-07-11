@@ -1,18 +1,17 @@
 import Tasks from '../tasks';
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import _ from 'lodash';
 const jwt = require('jsonwebtoken');
 
 import config from '../../../config.js';
 
-// month-day(47;48)
-
 export default class TaskHelper {
   constructor() {}
 
   getUidFromToken(token) {
     try {
-      const decoded = jwt.verify(token, config.envs.JWT_KEY);
+      const decoded = jwt.verify(token, Meteor.settings.JWT_KEY);
 
       return decoded['_id'];
     } catch (err) {

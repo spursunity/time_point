@@ -15,10 +15,10 @@ if (Meteor.isServer) {
     const signHelper = new SignHelper();
 
     WebApp.connectHandlers.use(session({
-      secret: config.envs.SESSION_SECRET,
+      secret: Meteor.settings.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: parseInt(config.envs.SESSION_MAX_AGE, 10) },
+      cookie: { maxAge: parseInt(Meteor.settings.SESSION_MAX_AGE, 10) },
     }));
 
     WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));

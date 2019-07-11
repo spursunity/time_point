@@ -1,4 +1,5 @@
 import Users from '../users';
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 const drupalHash = require('drupal-hash');
 const jwt = require('jsonwebtoken');
@@ -50,7 +51,7 @@ export default class SignHelper {
 
   createToken (userData) {
     try 
-{      return jwt.sign(userData, config.envs.JWT_KEY);
+{      return jwt.sign(userData, Meteor.settings.JWT_KEY);
     } catch (err) {
       console.log('SignHelper - createToken - ', err);
     }
