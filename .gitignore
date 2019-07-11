@@ -1,4 +1,8 @@
 node_modules/
 package-lock.json
-.meteor/versions
+.meteor/
 add_files/
+yarn.lock
+.env
+envs.js
+settings.json
