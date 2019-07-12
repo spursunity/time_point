@@ -1,12 +1,12 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-/*
+
 import session from 'express-session';
 const bodyParser = require('body-parser');
 
 import SignHelper from './helpers/sign-helper';
 import config from '../../config.js';
-*/
+
 export const Users = new Mongo.Collection('users');
 /*
 if (Meteor.isServer) {
