@@ -11,7 +11,7 @@ const StartPage = (props) => {
   let [ authError, setAuthError ] = useState({});
   let [ loading, setLoading ] = useState(true);
 
-  useEffect(() => {/*
+  useEffect(() => {
     Meteor.call('users.checkUserInitialData', (err, res) => {
       if (err) throw err;
 
@@ -23,7 +23,7 @@ const StartPage = (props) => {
       } else {
         setLoading(false);
       }
-    });*/
+    });
   }, []);
 
   const { routes } = config;

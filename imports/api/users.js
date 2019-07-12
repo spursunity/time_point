@@ -45,7 +45,7 @@ if (Meteor.isServer) {
     console.log('api/users.js - ', err);
   }
 }
-
+*/
 Meteor.methods({
   'users.checkUserInitialData'() {
     return false;
@@ -58,4 +58,3 @@ Meteor.methods({
     }
   },
 });
-*/
