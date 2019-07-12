@@ -80,6 +80,7 @@ const RuleTimer = (props) => {
       setTaskNameError(errorMessages.OCCUPIED_TASK_NAME);
       return;
     } else if (newTaskName.length < 1) {
+      setTaskNameError(errorMessages.EMPTY_FIELD);
       return;
     }
     const tasksCount = tasks.length;
