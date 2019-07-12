@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import config from '../../../../config.js';
 
-const NotFound = () => {
+const NotFound = (props) => {
   const { routes, headerTitles } = config;
 
   const redirectToStartPage = () => {
-    FlowRouter.go(routes.START_PAGE);
+    props.history.push(routes.START_PAGE);
   }
 
   return (
