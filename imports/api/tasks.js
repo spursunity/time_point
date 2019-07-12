@@ -83,21 +83,14 @@ Meteor.methods({
       console.log('Meteor methods - tasks - startTimer - ', err);
     }
   },
-  async 'tasks.stopTimer'(taskName, nowNumber) {
+  async 'tasks.stopTimer'(taskName, startTime, startDate, stopTime, stopDate) {
     try {
       const { uid } = authData;
-
-      const { startTime } = await Tasks.findOne({ owner: uid }, { fields: { startTime: 1 } }) || { startTime: null };
-
-      if (! startTime) throw new Meteor.Error('find start time error');
-
-      const durationString = taskHelper.getTaskDuration(startTime, nowNumber);
-      const startDate = taskHelper.transformDateToString(startTime);
-      const stopDate = taskHelper.transformDateToString(nowNumber);
+      const durationString = taskHelper.getTaskDuration(startTime, stopTime);
       const taskInfo = {
         name: taskName,
         startTime,
-        stopTime: nowNumber,
+        stopTime,
         durationString,
         startDate,
         stopDate,

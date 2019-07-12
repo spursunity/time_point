@@ -39,38 +39,4 @@ export default class TaskHelper {
       console.log('TaskHelper - getTaskDuration - ', err);
     }
   }
-
-  transformDateToString(dateNumber) {
-    try {
-      const date = new Date(dateNumber);
-      const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const weekdaysArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const day = date.getDate();
-      const monthNumber = date.getMonth();
-      const month = monthsArray[ monthNumber ];
-      const weekdayNumber = date.getDay();
-      const weekday = weekdaysArray[ weekdayNumber ];
-      const year = date.getFullYear();
-
-      const hoursString = this.transformTimeToString(hours);
-      const minutesString = this.transformTimeToString(minutes);
-
-      return `${hoursString}:${minutesString} - ${month} ${day} (${weekday}) - ${year}`;
-    } catch (err) {
-      console.log('TaskHelper - transformDateToString - ', err);
-    }
-  }
-
-  transformTimeToString(time) {
-    try {
-      if (time < 10) return '0' + time;
-
-      return '' + time;
-    } catch (err) {
-      console.log('TaskHelper - transformTimeToString - ', err);
-    }
-  }
 }
