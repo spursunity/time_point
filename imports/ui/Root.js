@@ -9,6 +9,8 @@ import NotFound from './pages/not-found/not-found.jsx';
 import RuleTimer from './pages/rule-timer/rule-timer.jsx';
 import TimeLog from './pages/time-log/time-log.jsx';
 
+const browserHistory = createBrowserHistory();
+
 export const Root = () => (
   <Router history={ browserHistory }>
     <Switch>
