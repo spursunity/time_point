@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { check } from 'meteor/check';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 import _ from 'lodash';
 
 import config from '../../../../config.js';
@@ -46,18 +45,18 @@ const RuleTimer = (props) => {
   const { routes, urls, errorMessages, keyCodes, headerTitles } = config;
 
   const redirectToStartPage = () => {
-    FlowRouter.go(routes.START_PAGE);
+    props.history.push(routes.START_PAGE);
   };
 
   const redirectToTimeLog = () => {
-    FlowRouter.go(routes.TIME_LOG);
+    props.history.push(routes.TIME_LOG);
   };
 
   const redirectWithLogout = async () => {
     try {
       setLoading(true);
       const res = await fetch(urls.LOGOUT);
-      FlowRouter.go(routes.START_PAGE);
+      props.history.push(routes.START_PAGE);
     } catch (err) {
       console.log(err);
     }
