@@ -10,14 +10,14 @@ export const Tasks = new Mongo.Collection('tasks');
 
 const taskHelper = new TaskHelper();
 
-if (Meteor.isServer) {/*
+if (Meteor.isServer) {
   try {
     WebApp.connectHandlers.use((req, res, next) => {
       next();
     });
   } catch (err) {
     console.log('api/tasks.js - ', err);
-  }*/
+  }
 }
 
 Meteor.methods({
