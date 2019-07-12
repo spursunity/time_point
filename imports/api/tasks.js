@@ -8,18 +8,11 @@ import TaskHelper from './helpers/task-helper';
 
 export default Tasks = new Mongo.Collection('tasks');
 
-let authData = {};
 const taskHelper = new TaskHelper();
 
 if (Meteor.isServer) {
   try {
     WebApp.connectHandlers.use((req, res, next) => {
-      authData = {};
-      authData.token = req.session.token;
-      if (authData.token) {
-        authData.uid = taskHelper.getUidFromToken(authData.token);
-      }
-
       next();
     });
   } catch (err) {

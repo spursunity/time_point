@@ -17,7 +17,7 @@ const StartPage = (props) => {
     Meteor.call('users.checkUserInitialData', (err, res) => {
       if (err) throw err;
 
-      if (res.hasToken) {
+      if (res && res.hasToken) {
         redirectToTimerPage();
       } else if (res.errors) {
         setAuthError(res.errors);

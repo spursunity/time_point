@@ -8,17 +8,15 @@ import config from '../../config.js';
 
 export default Users = new Mongo.Collection('users');
 
-let initialData = {};
-
 if (Meteor.isServer) {
   try {
     const signHelper = new SignHelper();
 
     WebApp.connectHandlers.use(session({
-      secret: config.envs.SESSION_SECRET,
+      secret: 'test-sec',
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: parseInt(config.envs.SESSION_MAX_AGE, 10) },
+      cookie: { maxAge: 3600000 },
     }));
 
     WebApp.connectHandlers.use(bodyParser.urlencoded({ extended: false }));
@@ -31,14 +29,6 @@ if (Meteor.isServer) {
       next();
     });
 
-    WebApp.connectHandlers.use((req, res, next) => {
-      initialData = {};
-
-      if (req.session.token) initialData.hasToken = true;
-
-      next();
-    });
-
     WebApp.connectHandlers.use(async (req, res, next) => {
       if (req.body.username && req.body.password) {
         const { username, password } = req.body;
@@ -46,13 +36,6 @@ if (Meteor.isServer) {
         const result = req.body.copyPassword ?
         await signHelper.signUp(username, password) :
         await signHelper.signIn(username, password);
-
-        if (result['_id']) {
-          req.session.token = signHelper.createToken(result);
-          initialData.hasToken = true;
-        } else {
-          initialData.errors = result;
-        }
       }
 
       next();
@@ -64,7 +47,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   'users.checkUserInitialData'() {
-    return initialData;
+    return false;
   },
   'users.removeAllUsers'() {
     try {
