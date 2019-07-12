@@ -4,6 +4,10 @@
 
 [Timepoint](https://timepoint.herokuapp.com/)
 
+## Tasks document from database (MongoDB):
+
+![database](https://github.com/spursunity/time_point/blob/master/public/screens/db.jpg)
+
 ## Usage:
 
 1. Sign in / up:
