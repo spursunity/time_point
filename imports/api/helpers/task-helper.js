@@ -1,4 +1,4 @@
-import Tasks from '../tasks';
+import { Tasks } from '../tasks';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import _ from 'lodash';

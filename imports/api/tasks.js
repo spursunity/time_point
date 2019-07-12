@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import TaskHelper from './helpers/task-helper';
 
-export default Tasks = new Mongo.Collection('tasks');
+export const Tasks = new Mongo.Collection('tasks');
 
 const taskHelper = new TaskHelper();
 

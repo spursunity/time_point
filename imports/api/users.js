@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 import SignHelper from './helpers/sign-helper';
 import config from '../../config.js';
 
-export default Users = new Mongo.Collection('users');
+export const Users = new Mongo.Collection('users');
 
 if (Meteor.isServer) {
   try {

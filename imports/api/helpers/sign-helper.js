@@ -1,4 +1,4 @@
-import Users from '../users';
+import { Users } from '../users';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 const drupalHash = require('drupal-hash');
