@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import config from '../../../../config.js';
 
@@ -30,9 +28,7 @@ const StartPage = (props) => {
 
   const { routes } = config;
 
-  const redirectToTimerPage = () => {
-    FlowRouter.go(routes.RULE_TIMER);
-  };
+  const redirectToTimerPage = () => {};
 
   return (
     loading ?
