@@ -3,21 +3,21 @@ import { Meteor } from 'meteor/meteor';
 import session from 'express-session';
 import { check } from 'meteor/check';
 import _ from 'lodash';
-
+/*
 import TaskHelper from './helpers/task-helper';
-
+*/
 export const Tasks = new Mongo.Collection('tasks');
 
 const taskHelper = new TaskHelper();
 
-if (Meteor.isServer) {
+if (Meteor.isServer) {/*
   try {
     WebApp.connectHandlers.use((req, res, next) => {
       next();
     });
   } catch (err) {
     console.log('api/tasks.js - ', err);
-  }
+  }*/
 }
 
 Meteor.methods({
