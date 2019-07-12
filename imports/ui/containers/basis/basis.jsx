@@ -23,7 +23,7 @@ const Basis = (props) => {
         }
       </header>
       { props.children }
-      <footer className='basisFooter'>Footer</footer>
+      <footer className='basisFooter'>Code on <a href="https://github.com/spursunity/time_point" target="_blank">GitHub</a></footer>
     </div>
   )
 }
