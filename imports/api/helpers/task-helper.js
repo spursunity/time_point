@@ -34,7 +34,10 @@ export default class TaskHelper {
 
       const minutes = _.round(diffTime / minuteMs);
 
-      return `${days} day(-s), ${hours} hour(-s), ${minutes} minute(-s)`;
+      const daysString = days ? `${days} day(-s), ` : '';
+      const hoursString = hours ? `${hours} hour(-s), ` : '';
+
+      return `${daysString}${hoursString}${minutes} minute(-s)`;
     } catch (err) {
       console.log('TaskHelper - getTaskDuration - ', err);
     }
