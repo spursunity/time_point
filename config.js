@@ -1,7 +1,6 @@
-import envs from './envs.js';
+// import envs from './envs.js';
 
 const config = {
-	envs,
 	errorMessages: {
 		WRONG_USERNAME_PASSWORD: 'Check your Username or/and password',
 		OCCUPIED_NAME: 'That name is already occupied',
