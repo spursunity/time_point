@@ -5,14 +5,21 @@ import { check } from 'meteor/check';
 import _ from 'lodash';
 
 import TaskHelper from './helpers/task-helper';
+const taskHelper = new TaskHelper();
 
 export const Tasks = new Mongo.Collection('tasks');
 
-const taskHelper = new TaskHelper();
+let authData = {};
 
 if (Meteor.isServer) {
   try {
     WebApp.connectHandlers.use((req, res, next) => {
+      authData = {};
+      authData.token = req.session.token;
+      if (authData.token) {
+        authData.uid = taskHelper.getUidFromToken(authData.token);
+      }
+      
       next();
     });
   } catch (err) {
