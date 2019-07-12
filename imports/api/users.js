@@ -8,7 +8,7 @@ import SignHelper from './helpers/sign-helper';
 import config from '../../config.js';
 
 export const Users = new Mongo.Collection('users');
-/*
+
 if (Meteor.isServer) {
   try {
     const signHelper = new SignHelper();
@@ -45,7 +45,7 @@ if (Meteor.isServer) {
     console.log('api/users.js - ', err);
   }
 }
-*/
+
 Meteor.methods({
   'users.checkUserInitialData'() {
     return false;
