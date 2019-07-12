@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import session from 'express-session';
 import { check } from 'meteor/check';
 import _ from 'lodash';
-/*
+
 import TaskHelper from './helpers/task-helper';
-*/
+
 export const Tasks = new Mongo.Collection('tasks');
 
 const taskHelper = new TaskHelper();
