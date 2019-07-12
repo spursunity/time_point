@@ -1,4 +1,3 @@
-// import envs from './envs.js';
 
 const config = {
 	errorMessages: {
