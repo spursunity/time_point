@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import Users from '../../../api/users';
 import config from '../../../../config.js';
 
 const Sign = ({ trySignIn, authError }) => {
