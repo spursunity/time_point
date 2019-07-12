@@ -126,7 +126,9 @@ const RuleTimer = (props) => {
 
   const startTimer = () => {
     if (tasks.includes(currentTaskName)) {
-      Meteor.call('tasks.startTimer', currentTaskName, (err, res) => {
+      const now = _.now();
+
+      Meteor.call('tasks.startTimer', currentTaskName, now, (err, res) => {
         if (err) throw new Meteor.Error('start timer error');
         check(res, Number);
 
@@ -137,7 +139,9 @@ const RuleTimer = (props) => {
 
   const stopTimer = () => {
     if (currentTaskName && currentTaskName.length) {
-      Meteor.call('tasks.stopTimer', currentTaskName, (err, res) => {
+      const now = _.now();
+
+      Meteor.call('tasks.stopTimer', currentTaskName, now, (err, res) => {
         if (err) throw new Meteor.Error('stop timer error');
 
         if (res) {

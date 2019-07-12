@@ -70,10 +70,9 @@ Meteor.methods({
       console.log('Meteor methods - tasks - getTasksList - ', err);
     }
   },
-  async 'tasks.startTimer'(taskName) {
+  async 'tasks.startTimer'(taskName, nowNumber) {
     try {
       const { uid } = authData;
-      const nowNumber = _.now();
 
       const updateResponse = await Tasks.update({ owner: uid }, { $set: { currentTaskName: taskName, startTime: nowNumber } });
 
@@ -84,10 +83,9 @@ Meteor.methods({
       console.log('Meteor methods - tasks - startTimer - ', err);
     }
   },
-  async 'tasks.stopTimer'(taskName) {
+  async 'tasks.stopTimer'(taskName, nowNumber) {
     try {
       const { uid } = authData;
-      const nowNumber = _.now();
 
       const { startTime } = await Tasks.findOne({ owner: uid }, { fields: { startTime: 1 } }) || { startTime: null };
 
