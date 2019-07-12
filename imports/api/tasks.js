@@ -114,14 +114,17 @@ Meteor.methods({
 
       if (! uid && process.env.NODE_ENV.trim() !== 'test') return false;
 
-      const { tasksInfo } = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } }) || { tasksInfo: [] };
+      const tasks = await Tasks.findOne({ owner: uid }, { fields: { tasksInfo: 1 } });
+
+      if (! tasks || ! tasks.tasksInfo) {
+        return [];
+      }
       let sortedTasksInfo;
 
-      if (tasksInfo.length > 1) {
-        sortedTasksInfo = _.sortBy(tasksInfo, [ (info) => -info.stopTime ]);
+      if (tasks.tasksInfo.length > 1) {
+        sortedTasksInfo = _.sortBy(tasks.tasksInfo, [ (info) => -info.stopTime ]);
       }
-
-      return sortedTasksInfo || tasksInfo;
+      return sortedTasksInfo || tasks.tasksInfo;
     } catch (err) {
       console.log('Meteor methods - tasks - getTasksInfo - ', err);
     }
