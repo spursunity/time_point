@@ -127,7 +127,6 @@ const RuleTimer = (props) => {
   const startTimer = () => {
     if (tasks.includes(currentTaskName)) {
       const now = new Date();
-      console.log(now.getTimezoneOffset());
       const nowNumber = now.getTime();
 
       Meteor.call('tasks.startTimer', currentTaskName, nowNumber, (err, res) => {
@@ -141,7 +140,9 @@ const RuleTimer = (props) => {
 
   const stopTimer = () => {
     if (currentTaskName && currentTaskName.length) {
-      const nowNumber = (new Date()).getTime();
+      const now = new Date();
+      console.log(now.getHours());
+      const nowNumber = now.getTime();
 
       Meteor.call('tasks.stopTimer', currentTaskName, nowNumber, (err, res) => {
         if (err) throw new Meteor.Error('stop timer error');
