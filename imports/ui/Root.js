@@ -11,7 +11,7 @@ import TimeLog from './pages/time-log/time-log.jsx';
 
 const browserHistory = createBrowserHistory();
 
-export const Root = () => (
+const Root = () => (
   <Router history={ browserHistory }>
     <Switch>
       <Route exact path="/" component={ StartPage }/>
@@ -21,3 +21,5 @@ export const Root = () => (
     </Switch>
   </Router>
 );
+
+export default Root;
