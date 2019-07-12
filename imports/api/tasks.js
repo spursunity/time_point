@@ -34,23 +34,20 @@ Meteor.methods({
       check(tasksCount, Number);
 
       const { uid } = authData;
+      const tasks = await Tasks.findOne({ owner: uid });
 
-      if (tasksCount === 0) {
+      if (! tasks.tasksNames) {
         const tasksListId = await Tasks.insert({ owner: uid, tasksNames: [ newTaskName ] });
 
         if (! tasksListId) throw new Meteor.Error('insert first task name error');
 
         return [ newTaskName ];
-      } else if (tasksCount > 0) {
+      } else if (tasks.tasksNames.length >= 0) {
         const updateResponse = await Tasks.update({ owner: uid }, { $push: { tasksNames: newTaskName } });
 
         if (updateResponse === 0) throw new Meteor.Error('update tasks names error');
 
-        const { tasksNames } = await Tasks.findOne({ owner: uid }, { fields: { tasksNames: 1 } }) || { tasksNames: [] };
-
-        if (tasksNames.length === 0) throw new Meteor.Error('find tasks names error');
-
-        return tasksNames;
+        return [...tasks.tasksNames, newTaskName];
       }
     } catch (err) {
       console.log('Meteor methods - tasks - addNewTask - ', err);
