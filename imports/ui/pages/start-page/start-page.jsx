@@ -28,7 +28,9 @@ const StartPage = (props) => {
 
   const { routes } = config;
 
-  const redirectToTimerPage = () => {};
+  const redirectToTimerPage = () => {
+    props.history.push(routes.RULE_TIMER);
+  };
 
   return (
     loading ?
