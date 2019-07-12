@@ -10,13 +10,14 @@ import RuleTimer from './pages/rule-timer/rule-timer.jsx';
 import TimeLog from './pages/time-log/time-log.jsx';
 
 const browserHistory = createBrowserHistory();
+const { routes } = config;
 
 const Root = () => (
   <Router history={ browserHistory }>
     <Switch>
-      <Route exact path="/" component={ StartPage }/>
-      <Route exact path="/timer" component={ RuleTimer }/>
-      <Route exact path="/log" component={ TimeLog }/>
+      <Route exact path={ routes.START_PAGE } component={ StartPage }/>
+      <Route exact path={ routes.RULE_TIMER } component={ RuleTimer }/>
+      <Route exact path={ routes.TIME_LOG } component={ TimeLog }/>
       <Route component={ NotFound }/>
     </Switch>
   </Router>
