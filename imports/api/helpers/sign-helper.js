@@ -64,7 +64,7 @@ export default class SignHelper {
       if (!! await Users.findOne({ username })) {
         errors.username = this.eMessages.OCCUPIED_NAME;
       } else if (username === '') {
-        errors.username = this.eMessages.EMPTY_USERNAME;
+        errors.username = this.eMessages.EMPTY_FIELD;
       }
 
       if (password.length < 6) {

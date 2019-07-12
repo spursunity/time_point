@@ -3,7 +3,7 @@ const config = {
 	errorMessages: {
 		WRONG_USERNAME_PASSWORD: 'Check your Username or/and password',
 		OCCUPIED_NAME: 'That name is already occupied',
-		EMPTY_USERNAME: 'Fill out this field',
+		EMPTY_FIELD: 'Fill out this field',
 		SHORT_PASSWORD: 'Minimal 6 symbols',
 		OCCUPIED_TASK_NAME: 'You already have such a task',
 	},
