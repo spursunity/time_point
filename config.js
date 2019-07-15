@@ -15,7 +15,7 @@ const config = {
 	},
 	headerTitles: {
 		DEFAULT: 'Time Point',
-		RULE_TIMER: 'Rule your time',
+		RULE_TIMER: 'Manage your time',
 		TIME_LOG: 'Your time is here',
 		NOT_FOUND: 'Sorry, Page not found:(',
 	},
